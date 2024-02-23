@@ -1,0 +1,107 @@
+*{
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  
+  .admin__card{
+    /* border:2px solid white ; */
+     color:black;
+     background-color: #00ffff;
+     transition: .2s all ease-in-out ;
+
+     box-shadow: rgba(3, 147, 137, 0.35) 0px 5px 15px;
+     width: 20%;
+  }
+  .admin__card:hover{
+    background-color: rgb(255, 255, 255);
+    /* color: rgb(25, 137, 137); */
+    transition: .2s all ease-in-out;
+    cursor: pointer;
+  }
+  .note__btn:hover{
+    /* background-color: rgb(30, 144, 255); */
+    color: black;
+    
+  }
+  .super-choose{
+    flex-direction: column;
+    height: 98vh;
+    width: 15%;
+    border-right: 2px solid rgb(30, 144, 255);
+  }
+  .super-choose::-webkit-scrollbar {
+    display: none;
+  }
+  .note__btn{
+    align-items: center;
+    display: flex;
+  }
+  .hide__btn{
+    display: none;
+  }
+  .dashcard {
+    width: 300px !important;
+    height: 150px !important;
+  }
+  /* .dashboardpage{
+    background-image: url('https://images.unsplash.com/photo-1454117096348-e4abbeba002c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  } */
+  .mainpage {
+    background-image: url('https://images.unsplash.com/photo-1454117096348-e4abbeba002c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  }
+ 
+
+  
+  
+  @media screen and (max-width: 750px) {
+    .hide__btn{
+      display: flex;
+    }
+    .admin__card{
+      margin: auto;
+       width: 80%;
+    }
+    .admin__row{
+      flex-direction: column;
+      gap: 20px;
+    }
+    /* .super-container{
+      flex-direction: column;
+    } */
+    .super-choose{
+      width: 0%;
+      margin-top: 50px;
+    }
+    .slider__close{
+      width: 0% !important;
+      transition: .5s all ease-in-out;
+    }
+    .slider__open{
+      width: 60%;
+      transition: .5s all ease-in-out;
+    }
+    /* .hide__btn:focus + .super-choose {
+      width: 50%;
+      transition: 1s all ease-in-out;
+    } */
+    .referrallink{
+        position: absolute;
+  bottom: -20%;
+  width: 100%;
+    }
+    .linksimgs{
+        position: absolute;
+        bottom: -47%;
+        width: 100%;
+    }
+    
+    
+  }
+  @media screen and (min-width: 650px) {
+    .cross{
+      display: none;
+      
+    }
+    
+  }
