@@ -8,6 +8,10 @@ import MyProfile from "../pages/MyProfile";
 import MainDashboard from "../pages/Dashboard";
 import Navbar from "./Navbar";
 import './MainPage.css';
+import AddMember from "../pages/AddMember";
+import MemberList from "../pages/MemberList";
+import DirectMember from "../pages/DirectMember";
+import LevelView from "../pages/LevelView";
 
 // import SnavBar from './SnavBar';
 
@@ -31,7 +35,15 @@ const MainPage = () => {
       subItems: ["My Profile", "My Bank", "My Password", "KYC Upload"],
     },
   ]);
-  
+
+  const [member, setMember] = useState([
+    {
+      id: 1,
+      name: "▶ Member",
+      isOpen: false,
+      subItems: ["Add Member","Member List","Direct Member","Level View"],
+    },
+  ]);
 
   const toggleDashboard = (itemId) => {
     setDashboard((prevItems) =>
@@ -47,6 +59,15 @@ const MainPage = () => {
       )
     );
   };
+
+  const toggleMember = (itemId) => {
+    setMember((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, isOpen: !item.isOpen } : item
+      )
+    );
+  };
+
  
   const handleDashboard = async () => {
     setNoteView("Dashboard");
@@ -77,6 +98,31 @@ const handleKYCUpload = async () => {
     ref.current.classList.add("slider__close");
     ref.current.classList.remove("slider__open");
     setSlideOpen(false);
+};
+
+const handleAddMember = async () => {
+  setNoteView("addMember");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
+const handleMemberList = async () => {
+  setNoteView("memberList");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
+const handleDirectMember = async () => {
+  setNoteView("directMember");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
+const handleLevelView = async () => {
+  setNoteView("levelView");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
 };
 
      
@@ -187,6 +233,41 @@ const handleKYCUpload = async () => {
               ))}
             </ul>
           </div>
+
+          <div
+            style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
+            className="note__btn"
+          >
+            <ul>
+              {member.map((items) => (
+                <li key={items.id}>
+                  <span
+                    onClick={() => toggleMember(items.id)}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: 17,
+                      textAlign: "left",
+                    }}
+                    className="note__btn"
+                  >
+                    {items.name}
+                  </span>
+                  {items.isOpen && (
+                    <ul style={{ padding: 10 }}>
+                      <li onClick={handleAddMember} style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} >Add Member</li>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleMemberList}>
+                      Member List
+                      </li>
+                      <li onClick={handleDirectMember} style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} >Direct Member</li>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleLevelView}>
+                      Level View
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
           
         </div>
         <div
@@ -211,6 +292,15 @@ const handleKYCUpload = async () => {
           ) : null}
           {noteView === "MyPassword" ? <MyPassword /> : null}
           {noteView === "KYCUpload" ? <KYCUpload /> : null}
+          {noteView === "addMember" ? (
+            <AddMember
+            />
+          ) : null}
+          {noteView === "memberList" ? (
+            <MemberList />
+          ) : null}
+          {noteView === "directMember" ? <DirectMember /> : null}
+          {noteView === "levelView" ? <LevelView /> : null}
           
         </div>
       </div>

@@ -2,7 +2,6 @@ import React from "react";
 import { IconContext } from "react-icons";
 import {
   MdPerson,
-  MdLocationOn,
   MdPeople,
   MdAttachMoney,
 } from "react-icons/md";

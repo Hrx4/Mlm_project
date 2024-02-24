@@ -32,7 +32,9 @@ const KYCUpload = () =>{
               <input type="file" accept=".pdf" id="email" className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required />
               <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4">Upload</button>
             </div>
+            
           </div>
+          <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4">Submit</button>
         </form>
       </div>
     </div>
