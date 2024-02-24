@@ -9,53 +9,52 @@ const RightPart = () => {
           <div className="shadow">
             <FaUser color="blue" />
             <div className=" text-lg font-semibold ">
-              SAGAR MOLLA (SDFX562748)
+              SAGAR MOLLA (Newins562748)
             </div>
             <div className=" text-gray-500">DOJ : 20-10-2022</div>
           </div>
           <div className="shadow">
             <FaUser color="blue" />
             <div className=" text-lg font-semibold ">
-              SAGAR MOLLA (SDFX562748)
+              SAGAR MOLLA (Newins562748)
             </div>
             <div className=" text-gray-500">DOJ : 20-10-2022</div>
           </div>
           <div className="shadow">
             <FaUser color="blue" />
             <div className=" text-lg font-semibold ">
-              SAGAR MOLLA (SDFX562748)
+              SAGAR MOLLA (Newins562748)
             </div>
             <div className=" text-gray-500">DOJ : 20-10-2022</div>
           </div>
           <div className="shadow">
             <FaUser color="blue" />
             <div className=" text-lg font-semibold ">
-              SAGAR MOLLA (SDFX562748)
+              SAGAR MOLLA (Newins562748)
             </div>
             <div className=" text-gray-500">DOJ : 20-10-2022</div>
           </div>
           <div className="shadow">
             <FaUser color="blue" />
             <div className=" text-lg font-semibold ">
-              SAGAR MOLLA (SDFX562748)
+              SAGAR MOLLA (Newins562748)
             </div>
             <div className=" text-gray-500">DOJ : 20-10-2022</div>
           </div>
           <div className="shadow">
             <FaUser color="blue" />
             <div className=" text-lg font-semibold ">
-              SAGAR MOLLA (SDFX562748)
+              SAGAR MOLLA (Newins562748)
             </div>
             <div className=" text-gray-500">DOJ : 20-10-2022</div>
           </div>
           <div className="shadow">
             <FaUser color="blue" />
             <div className=" text-lg font-semibold ">
-              SAGAR MOLLA (SDFX562748)
+              SAGAR MOLLA (Newins562748)
             </div>
             <div className=" text-gray-500">DOJ : 20-10-2022</div>
           </div>
-         
         </div>
       </div>
     </>
