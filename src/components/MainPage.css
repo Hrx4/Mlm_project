@@ -95,6 +95,9 @@
         bottom: -47%;
         width: 100%;
     }
+    .directmember{
+      margin-left: 0px !important;
+    }
     
     
   }
