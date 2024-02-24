@@ -63,7 +63,7 @@ const MainDashboard = () => {
               paddingLeft: "25px",
             }}
           >
-            https://Newinsglobal.com/joi...FnK0Z{" "}
+            https://Newins.com{" "}
           </p>
           <div className="flex flex-row">
             <img
