@@ -12,6 +12,10 @@ import AddMember from "../pages/AddMember";
 import MemberList from "../pages/MemberList";
 import DirectMember from "../pages/DirectMember";
 import LevelView from "../pages/LevelView";
+import AddEquity from "../pages/AddEquity";
+import ViewEquity from "../pages/ViewEquity";
+import INRDeposit from "../pages/INRDepost";
+import DepositReport from "../pages/DepositReport";
 
 // import SnavBar from './SnavBar';
 
@@ -45,6 +49,26 @@ const MainPage = () => {
     },
   ]);
 
+  const [equityUpload, setEquityUpload] = useState([
+    {
+      id: 1,
+      name: "▶ Equity upload",
+      isOpen: false,
+      subItems: ["Add Equity","View Equity"],
+    },
+  ]);
+
+  const [deposit, setDeposit] = useState([
+    {
+      id: 1,
+      name: "▶ Deposit",
+      isOpen: false,
+      subItems: ["INR Deposit","Deposit Report"],
+    },
+  ]);
+
+  
+
   const toggleDashboard = (itemId) => {
     setDashboard((prevItems) =>
       prevItems.map((item) =>
@@ -67,6 +91,24 @@ const MainPage = () => {
       )
     );
   };
+
+  const toggleEquity = (itemId) => {
+    setEquityUpload((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, isOpen: !item.isOpen } : item
+      )
+    );
+  };
+
+  const toggleDeposit = (itemId) => {
+    setDeposit((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, isOpen: !item.isOpen } : item
+      )
+    );
+  };
+
+
 
  
   const handleDashboard = async () => {
@@ -124,6 +166,36 @@ const handleLevelView = async () => {
   ref.current.classList.remove("slider__open");
   setSlideOpen(false);
 };
+
+const handleAddEuity = async () => {
+  setNoteView("addEquity");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
+
+const handleViewEquity = async () => {
+  setNoteView("viewEquity");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
+
+const handleINRDeposit = async () => {
+  setNoteView("INRDeposit");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
+
+const handleDepositReport = async () => {
+  setNoteView("DepositReport");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
+
+
 
      
 
@@ -239,6 +311,39 @@ const handleLevelView = async () => {
             className="note__btn"
           >
             <ul>
+              {equityUpload.map((items) => (
+                <li key={items.id}>
+                  <span
+                    onClick={() => toggleEquity(items.id)}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: 17,
+                      textAlign: "left",
+                    }}
+                    className="note__btn"
+                  >
+                    {items.name}
+                  </span>
+                  {items.isOpen && (
+                    <ul style={{ padding: 10 }}>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleAddEuity}>
+                        Add Equity
+                      </li>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleViewEquity}>
+                        View Equity
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div
+            style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
+            className="note__btn"
+          >
+            <ul>
               {member.map((items) => (
                 <li key={items.id}>
                   <span
@@ -261,6 +366,38 @@ const handleLevelView = async () => {
                       <li onClick={handleDirectMember} style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} >Direct Member</li>
                       <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleLevelView}>
                       Level View
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div
+            style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
+            className="note__btn"
+          >
+            <ul>
+              {deposit.map((items) => (
+                <li key={items.id}>
+                  <span
+                    onClick={() => toggleDeposit(items.id)}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: 17,
+                      textAlign: "left",
+                    }}
+                    className="note__btn"
+                  >
+                    {items.name}
+                  </span>
+                  {items.isOpen && (
+                    <ul style={{ padding: 10 }}>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleINRDeposit}>
+                        INR Deposit
+                      </li>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleDepositReport}>
+                        Deposit Report
                       </li>
                     </ul>
                   )}
@@ -301,7 +438,10 @@ const handleLevelView = async () => {
           ) : null}
           {noteView === "directMember" ? <DirectMember /> : null}
           {noteView === "levelView" ? <LevelView /> : null}
-          
+          {noteView === "addEquity" ? <AddEquity /> : null}
+          {noteView === "viewEquity" ? <ViewEquity /> : null}
+          {noteView === "INRDeposit" ? <INRDeposit /> : null}
+          {noteView === "DepositReport" ? <DepositReport /> : null}
         </div>
       </div>
     </>

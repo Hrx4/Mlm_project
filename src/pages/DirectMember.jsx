@@ -28,8 +28,8 @@ const DirectMember = () => {
                         <tbody>
                             <tr>
                                 <td className="border px-4 py-2">1.</td>
-                                <td className="border px-4 py-2">SDFX832154</td>
-                                <td className="border px-4 py-2">TOFIZUDDIN MALLICK</td>
+                                <td className="border px-4 py-2">NEWINS</td>
+                                <td className="border px-4 py-2">Pamela</td>
                                 <td className="border px-4 py-2">12345456</td>
                                 <td className="border px-4 py-2">t123@gmail.com</td>
                                 <td className="border px-4 py-2">15-11-2022</td>
