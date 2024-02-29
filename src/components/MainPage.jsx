@@ -16,6 +16,12 @@ import AddEquity from "../pages/AddEquity";
 import ViewEquity from "../pages/ViewEquity";
 import INRDeposit from "../pages/INRDepost";
 import DepositReport from "../pages/DepositReport";
+import WithdrawRequest from "../pages/WithdrawRequest";
+import WithdrawReport from "../pages/WithdrawReport";
+import SelfIncome from "../pages/SelfIncome";
+import LevelIncome from "../pages/LevelIncome";
+import DirectIncome from "../pages/DirectIncome";
+import DematIncome from "../pages/DematIncome";
 
 // import SnavBar from './SnavBar';
 
@@ -67,6 +73,25 @@ const MainPage = () => {
     },
   ]);
 
+  const [withdraw, setWithdraw] = useState([
+    {
+      id: 1,
+      name: "▶ Withdraw" ,
+      isOpen: false,
+      subItems: ["Withdraw request" , "Withdraw report"],
+    },
+  ]);
+
+  const [income, setIncome] = useState([
+    {
+      id: 1,
+      name: "▶ Income" ,
+      isOpen: false,
+      subItems: ["Self income", "Level Income", "Direct income", "Demat income"],
+    },
+  ]);
+
+
   
 
   const toggleDashboard = (itemId) => {
@@ -102,6 +127,22 @@ const MainPage = () => {
 
   const toggleDeposit = (itemId) => {
     setDeposit((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, isOpen: !item.isOpen } : item
+      )
+    );
+  };
+
+  const toggleWithdraw = (itemId) => {
+    setWithdraw((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, isOpen: !item.isOpen } : item
+      )
+    );
+  };
+
+  const toggleIncome = (itemId) => {
+    setIncome((prevItems) =>
       prevItems.map((item) =>
         item.id === itemId ? { ...item, isOpen: !item.isOpen } : item
       )
@@ -195,9 +236,48 @@ const handleDepositReport = async () => {
   setSlideOpen(false);
 };
 
+const handleWithdrawRequest = async () => {
+  setNoteView("withdrawRequest");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
 
+const handleWithdrawReport = async () => {
+  setNoteView("withdrawReport");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
 
-     
+const handleSelfIncome = async () => {
+  setNoteView("selfIncome");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
+
+const handleLevelIncome = async () => {
+  setNoteView("levelIncome");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
+
+const handleDirectIncome = async () => {
+  setNoteView("directIncome");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
+
+const handleDematIncome = async () => {
+  setNoteView("dematIncome");
+  ref.current.classList.add("slider__close");
+  ref.current.classList.remove("slider__open");
+  setSlideOpen(false);
+};
+
 
   const btnclicked = () => {
     if (!slideOpen) {
@@ -405,6 +485,78 @@ const handleDepositReport = async () => {
               ))}
             </ul>
           </div>
+
+          <div
+            style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
+            className="note__btn"
+          >
+            <ul>
+              {income.map((items) => (
+                <li key={items.id}>
+                  <span
+                    onClick={() => toggleIncome(items.id)}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: 17,
+                      textAlign: "left",
+                    }}
+                    className="note__btn"
+                  >
+                    {items.name}
+                  </span>
+                  {items.isOpen && (
+                    <ul style={{ padding: 10 }}>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleSelfIncome}>
+                        Self Income
+                      </li>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleLevelIncome}>
+                        Level Income
+                      </li>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleDirectIncome}>
+                        Direct Income
+                      </li>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleDematIncome}>
+                        Demat Income
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div
+            style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
+            className="note__btn"
+          >
+            <ul>
+              {withdraw.map((items) => (
+                <li key={items.id}>
+                  <span
+                    onClick={() => toggleWithdraw(items.id)}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: 17,
+                      textAlign: "left",
+                    }}
+                    className="note__btn"
+                  >
+                    {items.name}
+                  </span>
+                  {items.isOpen && (
+                    <ul style={{ padding: 10 }}>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleWithdrawRequest}>
+                      Withdraw Request
+                      </li>
+                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleWithdrawReport}>
+                      Withdraw Report
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
           
         </div>
         <div
@@ -442,6 +594,12 @@ const handleDepositReport = async () => {
           {noteView === "viewEquity" ? <ViewEquity /> : null}
           {noteView === "INRDeposit" ? <INRDeposit /> : null}
           {noteView === "DepositReport" ? <DepositReport /> : null}
+          {noteView === "withdrawRequest" ? <WithdrawRequest /> : null}
+          {noteView === "withdrawReport" ? <WithdrawReport /> : null}
+          {noteView === "selfIncome" ? <SelfIncome /> : null}
+          {noteView === "levelIncome" ? <LevelIncome /> : null}
+          {noteView === "directIncome" ? <DirectIncome /> : null}
+          {noteView === "dematIncome" ? <DematIncome /> : null}
         </div>
       </div>
     </>
