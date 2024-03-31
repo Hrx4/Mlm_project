@@ -10,21 +10,34 @@ const createUser = asyncHandler(async (req, res) => {
     userName,
     userMobile,
     userEmail,
-    userPan,
     userCountry,
     userState,
+    userPassword,
   } = req.body;
-const randomId = randomUUID();
+  const randomId = randomUUID();
+  let parentChild = [];
   if (introducerCode !== "") {
-    const parentUser = await UserModel.findOneAndUpdate(
-      { userId: introducerCode },
-      { $push: { childUsers: randomId } }
-      
-    )
-    if(parentUser===null) return res.status(404).json({message : "Invalid Introductur Code"})
-    console.log("====================================");
-    console.log(parentUser);
-    console.log("====================================");
+    const parentUser = await UserModel.findOne({ userId: introducerCode });
+    if (!parentUser)
+      return res.status(404).json({ message: "Invalid Introductur Code" });
+
+    if (parentUser.childUsers.length === 0) {
+      if (parentUser.levelParent.length === 0) {
+        parentChild = [introducerCode];
+      } else {
+        parentChild = [...parentUser.levelParent, introducerCode];
+      }
+    }
+
+    parentChild.map(async (item, index) => {
+      const updateParent = await UserModel.findOneAndUpdate(
+        { userId: item },
+        { $push: { levelChild: randomId } }
+      );
+    });
+    parentUser.childUsers.push(randomId);
+
+    const updatedUser = await parentUser.save();
   }
   console.log("====================================");
   console.log({ intr: introducerCode });
@@ -37,10 +50,29 @@ const randomId = randomUUID();
     userName,
     userMobile,
     userEmail,
-    userPan,
     userCountry,
     userState,
+    userPassword,
     childUsers: [],
+    levelParent: parentChild,
+    levelChild: [],
+    userFather: "",
+    userDob: "",
+    userAdhar: "",
+    userGender: "",
+    userNominee: "",
+    userNomineeRelation: "",
+    bankIfsc: "",
+    bankName: "",
+    bankBranch: "",
+    bankAccountNo: "",
+    bankHolderName: "",
+    bankAccountType: "",
+    bankPan: "",
+    kycPan: "",
+    kycAdharFront: "",
+    kycAdharBack: "",
+    kycBank: "",
   });
   res.status(200).json(user);
 });
@@ -62,4 +94,88 @@ const randomId = randomUUID();
 //   res.status(200).json(apply);
 // });
 
-module.exports = { createUser };
+const updateBankInfo = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
+  const {
+    bankIfsc,
+    bankName,
+    bankBranch,
+    bankAccountNo,
+    bankHolderName,
+    bankAccountType,
+    bankPan,
+  } = req.body;
+
+  const updatedUser = await UserModel.findOneAndUpdate({userId : userId} , {
+    bankIfsc,
+    bankName,
+    bankBranch,
+    bankAccountNo,
+    bankHolderName,
+    bankAccountType,
+    bankPan
+  })
+  console.log('====================================');
+  console.log(updatedUser);
+  console.log('====================================');
+  res.status(201).json(updatedUser);
+});
+
+
+const updateKyc = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
+  const {
+    kycPan,
+    kycAdharFront,
+    kycAdharBack,
+    kycBank
+  } = req.body;
+
+  const updatedUser = await UserModel.findOneAndUpdate({userId : userId} , {
+    kycPan,
+    kycAdharFront,
+    kycAdharBack,
+    kycBank
+  })
+  console.log('====================================');
+  console.log(updatedUser);
+  console.log('====================================');
+  res.status(201).json(updatedUser);
+});
+
+const updateProfile = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
+  const {
+    userName,
+    userMobile,
+    userEmail,
+    userCountry,
+    userState,
+    userFather,
+    userDob,
+    userAdhar,
+    userGender,
+    userNominee,
+    userNomineeRelation
+  } = req.body;
+
+  const updatedUser = await UserModel.findOneAndUpdate({userId : userId} , {
+    userName,
+    userMobile,
+    userEmail,
+    userCountry,
+    userState,
+    userFather,
+    userDob,
+    userAdhar,
+    userGender,
+    userNominee,
+    userNomineeRelation
+  })
+  console.log('====================================');
+  console.log(updatedUser);
+  console.log('====================================');
+  res.status(201).json(updatedUser);
+});
+
+module.exports = { createUser , updateBankInfo , updateKyc , updateProfile};

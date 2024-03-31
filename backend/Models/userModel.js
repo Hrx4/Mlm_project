@@ -4,11 +4,17 @@ const UserSchema = mongoose.Schema(
   {
     userId: {
       type: String,
-      
+      require: true,
+      index: true,
     },
     childUsers: {
       type: [],
-      
+    },
+    levelParent: {
+      type: [],
+    },
+    levelChild: {
+      type: [],
     },
     introducerCode: {
       type: String,
@@ -18,27 +24,78 @@ const UserSchema = mongoose.Schema(
     },
     userName: {
       type: String,
-      
+      require: true,
     },
     userMobile: {
       type: Number,
-      
+      require: true,
     },
     userEmail: {
       type: String,
-      
+      require: true,
     },
-    userPan: {
+    userPassword: {
       type: String,
-      
+      require: true,
     },
     userCountry: {
       type: String,
-      
+      require: true,
     },
     userState: {
       type: String,
-      
+      require: true,
+    },
+    userFather: {
+      type: String,
+    },
+    userDob: {
+      type: String,
+    },
+    userAdhar: {
+      type: String,
+    },
+    userGender: {
+      type: String,
+    },
+    userNominee: {
+      type: String,
+    },
+    userNomineeRelation: {
+      type: String,
+    },
+    bankIfsc: {
+      type: String,
+    },
+    bankName: {
+      type: String,
+    },
+    bankBranch: {
+      type: String,
+    },
+    bankAccountNo: {
+      type: String,
+    },
+    bankHolderName: {
+      type: String,
+    },
+    bankAccountType: {
+      type: String,
+    },
+    bankPan: {
+      type: String,
+    },
+    kycPan: {
+      type: String,
+    },
+    kycAdharFront: {
+      type: String,
+    },
+    kycAdharBack: {
+      type: String,
+    },
+    kycBank: {
+      type: String,
     },
   },
   {

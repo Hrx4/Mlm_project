@@ -29,19 +29,19 @@ const AddMember = () => {
             </div>
             <div className="mb-4">
               <label htmlFor="dob" className="block font-semibold">Email ID.*</label>
-              <input type="date" id="dob" className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required />
+              <input type="email" id="dob" className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required />
             </div>
             <div className="mb-4">
-              <label htmlFor="aadhar" className="block font-semibold">PAN / NID No.*</label>
-              <input type="text" id="aadhar" className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required />
+              <label htmlFor="password" className="block font-semibold">Password*</label>
+              <input type="text" id="password" className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required />
             </div>
             <div className="mb-4">
               <label htmlFor="gender" className="block font-semibold">Country*</label>
-              <input type="text" id="aadhar" className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required />
+              <input type="text" id="country" className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required />
             </div>
             <div className="mb-4">
               <label htmlFor="country" className="block font-semibold">State*</label>
-              <input type="text" id="country" className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required />
+              <input type="text" id="state" className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required />
             </div>
           </div>
           <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4">Submit</button>
