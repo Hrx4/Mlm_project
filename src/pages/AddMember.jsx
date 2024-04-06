@@ -26,6 +26,14 @@ const AddMember = () => {
   userState : userState,
   userPassword : userPassword,
       });
+      setIntroducerCode("")
+      setIntroducerName("")
+      setUserName("")
+      setUserMobile("")
+      setUserCountry("")
+      setUserState("")
+      setUserPassword("")
+
       console.log('====================================');
       console.log(response);
       console.log('====================================');
