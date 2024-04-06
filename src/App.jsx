@@ -1,9 +1,10 @@
 import React from 'react'
-import Navbar from './components/Navbar'
-// import LeftPart from './components/LeftPart'
-import RightPart from './components/RightPart'
-import MainPage from './components/MainPage'
-import MyProfile from './pages/MyProfile'
+import Login from './pages/Login/Login'
+import {  Route, Routes } from 'react-router-dom';
+import MainPage from "./components/MainPage"
+import AdminMainPage from './pages/Admin/AdminMainPage';
+import SignUp from './pages/Login/SignUp';
+import SignIn from './pages/Login/SignIn';
 
 
 const App = () => {
@@ -17,10 +18,16 @@ const App = () => {
         <MainPage/>
       </div>
       </div> */}
-      <div>
-        <MainPage/>
-      
-      </div>
+<div>
+  <Routes>
+    <Route path='/login' element={<Login/>} index />
+    <Route path='/' element={<MainPage/>}/>
+    <Route path='/admin' element={<AdminMainPage/>}/>
+    <Route path="/signup" element={<SignUp/>} />
+    <Route path="/signin" element={<SignIn/>} />
+
+        </Routes>
+</div>
     </>
   )
 }

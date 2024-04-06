@@ -30,6 +30,8 @@ app.get('/', (req, res) => {
   res.send('Hello, World! This is my Express server!');
 });
 app.use('/user' , require('./Routes/userRoute'))
+app.use('/userlist' , require('./Routes/idList'))
+app.use('/login' , require('./Routes/loginRoute'))
 
 app.listen(8080, () => {
   console.log(`Server is running on Port 8080`);

@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const UserModel = require("../Models/UserModel");
 const { default: ShortUniqueId } = require("short-unique-id");
+const idList = require("../Models/idList");
 const { randomUUID } = new ShortUniqueId({ length: 10 });
 
 const createUser = asyncHandler(async (req, res) => {
@@ -15,6 +16,11 @@ const createUser = asyncHandler(async (req, res) => {
     userPassword,
   } = req.body;
   const randomId = randomUUID();
+  const createList = await idList.create({
+    userName ,
+    userId : randomId,
+    userCodeId : ""
+  })
   let parentChild = [];
   if (introducerCode !== "") {
     const parentUser = await UserModel.findOne({ userId: introducerCode });
@@ -73,6 +79,7 @@ const createUser = asyncHandler(async (req, res) => {
     kycAdharFront: "",
     kycAdharBack: "",
     kycBank: "",
+
   });
   res.status(200).json(user);
 });

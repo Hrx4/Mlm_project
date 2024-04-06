@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IconContext } from "react-icons";
-import {
-  MdPerson,
-  MdPeople,
-  MdAttachMoney,
-} from "react-icons/md";
+import { MdPerson, MdPeople, MdAttachMoney } from "react-icons/md";
 import { RiTeamLine } from "react-icons/ri";
 
 const MainDashboard = () => {
+  const [userInfo, setuserInfo] = useState({});
+
+  useEffect(() => {
+    setuserInfo(JSON.parse(localStorage.getItem("userInfo")));
+  }, []);
+
   return (
     <div className="dashboardpage">
       <div style={{ marginBottom: "50px" }}>
         <IconContext.Provider value={{ className: "text-4xl" }}>
           <div className="flex flex-wrap justify-center items-center h-screen">
-            <Card icon={<MdPerson />} title="Pamela" subtitle="ID: NEWINS8554" />
+            <Card
+              icon={<MdPerson />}
+              title={userInfo?.userName}
+              subtitle={`ID : ${userInfo?.userCodeId}`}
+            />
             <Card icon={<RiTeamLine />} title="My Direct" subtitle="12" />
             <Card icon={<MdPeople />} title="My Team" subtitle="24" />
             <Card
@@ -35,6 +41,11 @@ const MainDashboard = () => {
               icon={<MdAttachMoney />}
               title="Total Income"
               subtitle="₹2500"
+            />
+            <Card
+              icon={<MdAttachMoney />}
+              title="Status"
+              subtitle={userInfo?.userStatus}
             />
           </div>
         </IconContext.Provider>

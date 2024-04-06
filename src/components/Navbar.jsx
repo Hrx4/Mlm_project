@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { RxCross2 } from "react-icons/rx";
 import { FaCircleUser } from "react-icons/fa6";
@@ -6,7 +6,11 @@ import { MdLogout } from "react-icons/md";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [userInfo, setuserInfo] = useState({});
 
+  useEffect(() => {
+    setuserInfo(JSON.parse(localStorage.getItem("userInfo")));
+  }, []);
   return (
     <div className="bg-white sticky top-0 z-50  ">
       {/* desktop  */}
@@ -29,7 +33,7 @@ export default function Navbar() {
                     onClick={() => setOpen(!open)}
                   >
                     <FaCircleUser color="gray" size={40} />
-                    Newins562748
+                    {userInfo?.userCodeId}
                   </div>
                   {open ? (
                     <div className="w-48 bg-blue-200 absolute right-0 mr-8">

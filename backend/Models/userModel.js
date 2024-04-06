@@ -7,6 +7,15 @@ const UserSchema = mongoose.Schema(
       require: true,
       index: true,
     },
+    userCodeId:{
+      type:String,
+      index : true,
+      default : ""
+    },
+    userStatus : {
+      type : String,
+      default:"Not Active"
+    },
     childUsers: {
       type: [],
     },
