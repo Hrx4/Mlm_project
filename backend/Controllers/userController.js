@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const UserModel = require("../Models/UserModel");
+const UserModel = require("../Models/UserModel").default;
 const { default: ShortUniqueId } = require("short-unique-id");
 const idList = require("../Models/idList");
 const { randomUUID } = new ShortUniqueId({ length: 10 });
@@ -17,10 +17,10 @@ const createUser = asyncHandler(async (req, res) => {
   } = req.body;
   const randomId = randomUUID();
   const createList = await idList.create({
-    userName ,
-    userId : randomId,
-    userCodeId : ""
-  })
+    userName,
+    userId: randomId,
+    userCodeId: "",
+  });
   let parentChild = [];
   if (introducerCode !== "") {
     const parentUser = await UserModel.findOne({ userId: introducerCode });
@@ -79,7 +79,6 @@ const createUser = asyncHandler(async (req, res) => {
     kycAdharFront: "",
     kycAdharBack: "",
     kycBank: "",
-
   });
   res.status(200).json(user);
 });
@@ -113,40 +112,40 @@ const updateBankInfo = asyncHandler(async (req, res) => {
     bankPan,
   } = req.body;
 
-  const updatedUser = await UserModel.findOneAndUpdate({userId : userId} , {
-    bankIfsc,
-    bankName,
-    bankBranch,
-    bankAccountNo,
-    bankHolderName,
-    bankAccountType,
-    bankPan
-  })
-  console.log('====================================');
+  const updatedUser = await UserModel.findOneAndUpdate(
+    { userId: userId },
+    {
+      bankIfsc,
+      bankName,
+      bankBranch,
+      bankAccountNo,
+      bankHolderName,
+      bankAccountType,
+      bankPan,
+    }
+  );
+  console.log("====================================");
   console.log(updatedUser);
-  console.log('====================================');
+  console.log("====================================");
   res.status(201).json(updatedUser);
 });
 
-
 const updateKyc = asyncHandler(async (req, res) => {
   const userId = req.params.id;
-  const {
-    kycPan,
-    kycAdharFront,
-    kycAdharBack,
-    kycBank
-  } = req.body;
+  const { kycPan, kycAdharFront, kycAdharBack, kycBank } = req.body;
 
-  const updatedUser = await UserModel.findOneAndUpdate({userId : userId} , {
-    kycPan,
-    kycAdharFront,
-    kycAdharBack,
-    kycBank
-  })
-  console.log('====================================');
+  const updatedUser = await UserModel.findOneAndUpdate(
+    { userId: userId },
+    {
+      kycPan,
+      kycAdharFront,
+      kycAdharBack,
+      kycBank,
+    }
+  );
+  console.log("====================================");
   console.log(updatedUser);
-  console.log('====================================');
+  console.log("====================================");
   res.status(201).json(updatedUser);
 });
 
@@ -163,26 +162,29 @@ const updateProfile = asyncHandler(async (req, res) => {
     userAdhar,
     userGender,
     userNominee,
-    userNomineeRelation
+    userNomineeRelation,
   } = req.body;
 
-  const updatedUser = await UserModel.findOneAndUpdate({userId : userId} , {
-    userName,
-    userMobile,
-    userEmail,
-    userCountry,
-    userState,
-    userFather,
-    userDob,
-    userAdhar,
-    userGender,
-    userNominee,
-    userNomineeRelation
-  })
-  console.log('====================================');
+  const updatedUser = await UserModel.findOneAndUpdate(
+    { userId: userId },
+    {
+      userName,
+      userMobile,
+      userEmail,
+      userCountry,
+      userState,
+      userFather,
+      userDob,
+      userAdhar,
+      userGender,
+      userNominee,
+      userNomineeRelation,
+    }
+  );
+  console.log("====================================");
   console.log(updatedUser);
-  console.log('====================================');
+  console.log("====================================");
   res.status(201).json(updatedUser);
 });
 
-module.exports = { createUser , updateBankInfo , updateKyc , updateProfile};
+module.exports = { createUser, updateBankInfo, updateKyc, updateProfile };
