@@ -15,42 +15,27 @@ const createUser = asyncHandler(async (req, res) => {
     userState,
     userPassword,
   } = req.body;
-  const randomId = randomUUID();
-  const createList = await idList.create({
-    userName,
-    userId: randomId,
-    userCodeId: "",
-  });
-  let parentChild = [];
-  if (introducerCode !== "") {
-    const parentUser = await UserModel.findOne({ userId: introducerCode });
-    if (!parentUser)
-      return res.status(404).json({ message: "Invalid Introductur Code" });
+  
 
-    if (parentUser.childUsers.length === 0) {
-      if (parentUser.levelParent.length === 0) {
-        parentChild = [introducerCode];
-      } else {
-        parentChild = [...parentUser.levelParent, introducerCode];
-      }
-    }
-
-    parentChild.map(async (item, index) => {
-      const updateParent = await UserModel.findOneAndUpdate(
-        { userId: item },
-        { $push: { levelChild: randomId } }
-      );
+  try {
+    const createList = await idList.create({
+      userName,
+      userId: "",
+      introducerCode : introducerCode,
+      userEmail : userEmail
     });
-    parentUser.childUsers.push(randomId);
 
-    const updatedUser = await parentUser.save();
+    
+  } catch (error) {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
+    if(error.code===11000)
+    throw new Error("Email Id Exist")
+
   }
-  console.log("====================================");
-  console.log({ intr: introducerCode });
-  console.log("====================================");
-
   const user = await UserModel.create({
-    userId: randomId,
+    userId: "",
     introducerCode,
     introducerName,
     userName,
@@ -59,26 +44,6 @@ const createUser = asyncHandler(async (req, res) => {
     userCountry,
     userState,
     userPassword,
-    childUsers: [],
-    levelParent: parentChild,
-    levelChild: [],
-    userFather: "",
-    userDob: "",
-    userAdhar: "",
-    userGender: "",
-    userNominee: "",
-    userNomineeRelation: "",
-    bankIfsc: "",
-    bankName: "",
-    bankBranch: "",
-    bankAccountNo: "",
-    bankHolderName: "",
-    bankAccountType: "",
-    bankPan: "",
-    kycPan: "",
-    kycAdharFront: "",
-    kycAdharBack: "",
-    kycBank: "",
   });
   res.status(200).json(user);
 });

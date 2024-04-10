@@ -18,7 +18,7 @@ const MainDashboard = () => {
             <Card
               icon={<MdPerson />}
               title={userInfo?.userName}
-              subtitle={`ID : ${userInfo?.userCodeId}`}
+              subtitle={`ID : ${userInfo?.userId}`}
             />
             <Card icon={<RiTeamLine />} title="My Direct" subtitle="12" />
             <Card icon={<MdPeople />} title="My Team" subtitle="24" />

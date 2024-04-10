@@ -8,9 +8,14 @@ const idList = mongoose.Schema(
     userId : {
         type : String
     },
-    userCodeId : {
-        type : String
+    introducerCode : {
+      type : String
+    },
+    userEmail : {
+      type : String,
+      unique : true
     }
+    
 },
 {
   timestamps: true,

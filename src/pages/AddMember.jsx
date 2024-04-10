@@ -30,6 +30,7 @@ const AddMember = () => {
       setIntroducerName("")
       setUserName("")
       setUserMobile("")
+      setUserEmail("")
       setUserCountry("")
       setUserState("")
       setUserPassword("")
