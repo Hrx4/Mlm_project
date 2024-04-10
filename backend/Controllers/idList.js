@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const UserModel = require("../Models/userModel").default;
+const UserModel = require("../Models/userModel");
 const idList = require("../Models/idList");
 
 const acceptUser = asyncHandler(async (req, res) => {

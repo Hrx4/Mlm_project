@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom'
-
+import axios from 'axios'
+import backend from '../../backend';
 const SignUp = () => {
-  const [introducerCode, setIntroducerCode] = useState('');
-  const [introducerName, setIntroducerName] = useState('');
-  const [name, setName] = useState('');
-  const [mobileNo, setMobileNo] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [country, setCountry] = useState('');
-  const [state, setState] = useState('');
+  const [introducerCode, setIntroducerCode] = useState("");
+  const [introducerName, setIntroducerName] = useState("");
+  const [name, setName] = useState("");
+  const [mobileNo, setMobileNo] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
   const navigate = useNavigate();
 
   const handleSignUp = async(e) => {
@@ -18,7 +19,7 @@ const SignUp = () => {
     // For example, send the form data to an API endpoint
 
     try {
-        const response = await axios.post(`${backend}/user` , {
+        const response = await axios.post(`${backend}/user/` , {
           introducerCode : introducerCode,
     introducerName : introducerName,
     userName : name,
@@ -53,7 +54,7 @@ const SignUp = () => {
             className="mt-1 p-2 w-full border rounded-md"
             value={introducerCode}
             onChange={(e) => setIntroducerCode(e.target.value)}
-            required
+            
           />
         </div>
 
@@ -67,7 +68,7 @@ const SignUp = () => {
             className="mt-1 p-2 w-full border rounded-md"
             value={introducerName}
             onChange={(e) => setIntroducerName(e.target.value)}
-            required
+            
           />
         </div>
 

@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const UserModel = require("../Models/userModel").default;
+const UserModel = require("../Models/userModel");
 const { default: ShortUniqueId } = require("short-unique-id");
 const idList = require("../Models/idList");
 const { randomUUID } = new ShortUniqueId({ length: 10 });
