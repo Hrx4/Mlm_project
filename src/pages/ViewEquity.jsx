@@ -8,7 +8,7 @@ const ViewEquity = () =>{
       <div className="max-w-2xl mx-auto bg-gray-100 rounded-lg shadow-md p-8">
         <div className="flex items-center mb-4">
           <FaList className="text-2xl mr-2" />
-          <h1 className="text-xl font-bold">View Equity</h1>
+          <h1 className="text-xl font-bold">View Fee</h1>
         </div>
         <form>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

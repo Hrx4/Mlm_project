@@ -13,8 +13,17 @@ const idList = mongoose.Schema(
     },
     userEmail : {
       type : String,
-      unique : true
+      unique : true,
+      
+    },
+    membershipFee : {
+      type : Number,
+      default : 0
+    },
+    membershipPhoto : {
+      type : String
     }
+
     
 },
 {

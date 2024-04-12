@@ -5,9 +5,13 @@ import { RiTeamLine } from "react-icons/ri";
 
 const MainDashboard = () => {
   const [userInfo, setuserInfo] = useState({});
+  const [totalTeam, setTotalTeam] = useState(0);
+
 
   useEffect(() => {
-    setuserInfo(JSON.parse(localStorage.getItem("userInfo")));
+    setuserInfo(JSON.parse(localStorage.getItem("userInfo"))?.user);
+    setTotalTeam(JSON.parse(localStorage.getItem("userInfo"))?.totalTeam);
+
   }, []);
 
   return (
@@ -20,27 +24,27 @@ const MainDashboard = () => {
               title={userInfo?.userName}
               subtitle={`ID : ${userInfo?.userId}`}
             />
-            <Card icon={<RiTeamLine />} title="My Direct" subtitle="12" />
-            <Card icon={<MdPeople />} title="My Team" subtitle="24" />
+            <Card icon={<RiTeamLine />} title="My Direct" subtitle={userInfo?.childUsers?.length} />
+            <Card icon={<MdPeople />} title="My Team" subtitle={totalTeam}/>
             <Card
               icon={<MdAttachMoney />}
               title="Level Income"
-              subtitle="₹1200"
+              subtitle={`₹${userInfo?.levelIncome}`}
             />
             <Card
               icon={<MdAttachMoney />}
               title="Self Income"
-              subtitle="₹500"
+              subtitle={`₹${userInfo?.selfIncome}`}
             />
             <Card
               icon={<MdAttachMoney />}
               title="Demat Income"
-              subtitle="₹800"
+              subtitle="₹0"
             />
             <Card
               icon={<MdAttachMoney />}
               title="Total Income"
-              subtitle="₹2500"
+              subtitle={`₹${userInfo?.levelIncome + userInfo?.selfIncome}`}
             />
             <Card
               icon={<MdAttachMoney />}

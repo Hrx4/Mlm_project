@@ -11,6 +11,11 @@ const UserSchema = mongoose.Schema(
       type: String,
       default: "Not Active",
     },
+      totalTeam : {
+        type:Number,
+        default : 0
+      
+    },
     childUsers: {
       type: [],
       default: [],
@@ -38,6 +43,14 @@ const UserSchema = mongoose.Schema(
     userMobile: {
       type: Number,
       require: true,
+    },
+    selfIncome:{
+      type : Number,
+      default : 0
+    },
+    levelIncome:{
+      type : Number,
+      default : 0
     },
     userEmail: {
       type: String,

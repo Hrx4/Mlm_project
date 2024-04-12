@@ -30,7 +30,6 @@ const createUser = asyncHandler(async (req, res) => {
     console.log('====================================');
     console.log(error);
     console.log('====================================');
-    if(error.code===11000)
     throw new Error("Email Id Exist")
 
   }

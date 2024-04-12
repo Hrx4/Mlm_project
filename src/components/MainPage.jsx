@@ -58,9 +58,9 @@ const MainPage = () => {
   const [equityUpload, setEquityUpload] = useState([
     {
       id: 1,
-      name: "▶ Equity upload",
+      name: "▶ Membership Fee",
       isOpen: false,
-      subItems: ["Add Equity","View Equity"],
+      subItems: ["Add Fee","View Fee"],
     },
   ]);
 
@@ -407,10 +407,10 @@ const handleDematIncome = async () => {
                   {items.isOpen && (
                     <ul style={{ padding: 10 }}>
                       <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleAddEuity}>
-                        Add Equity
+                        Add Fee
                       </li>
                       <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleViewEquity}>
-                        View Equity
+                        View Fee
                       </li>
                     </ul>
                   )}
