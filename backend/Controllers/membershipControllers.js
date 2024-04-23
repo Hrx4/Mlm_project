@@ -3,7 +3,7 @@ const idList = require("../Models/idList");
 
 const membershipFeeUpload = asyncHandler(async(req , res)=>{
    const {membershipFee , membershipPhoto , membershipId} = req.body;
-   let updateMembership
+   let updateMembership 
    try {
      updateMembership = await idList.findOneAndUpdate({userEmail : membershipId} , 
         {
@@ -11,12 +11,12 @@ const membershipFeeUpload = asyncHandler(async(req , res)=>{
             membershipPhoto : membershipPhoto
         })
    } catch (error) {
-    throw new Error("Something Wrong")
+    throw new Error(error.message)
    }
-
-res.status(201).json(updateMembership);
-
-
+   console.log('====================================');
+   console.log("update :" + updateMembership)
+   console.log('====================================');
+res.status(201).json(updateMembership)
 })
 
 module.exports = { membershipFeeUpload };

@@ -45,7 +45,7 @@ const AddEquity = () => {
       const response = await axios.post(`${backend}/membership/` , {
         membershipFee : membershipFee,
         membershipPhoto : membershipPhoto,
-        membershipId : JSON.parse(localStorage.getItem("userInfo")).userEmail
+        membershipId : JSON.parse(localStorage.getItem("userInfo")).user.userEmail
       });
       setMembershipFee(0)
 ref.current.value=""

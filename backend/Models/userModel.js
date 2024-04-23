@@ -7,6 +7,11 @@ const UserSchema = mongoose.Schema(
       require: true,
       index: true,
     },
+    business :
+    {
+      type : [],
+      default :[]
+    },
     userStatus: {
       type: String,
       default: "Not Active",

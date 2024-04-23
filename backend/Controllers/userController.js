@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
-const UserModel = require("../Models/userModel");
 const { default: ShortUniqueId } = require("short-unique-id");
 const idList = require("../Models/idList");
+const UserModel = require("../Models/userModel");
 const { randomUUID } = new ShortUniqueId({ length: 10 });
 
 const createUser = asyncHandler(async (req, res) => {
@@ -30,7 +30,7 @@ const createUser = asyncHandler(async (req, res) => {
     console.log('====================================');
     console.log(error);
     console.log('====================================');
-    throw new Error("Email Id Exist")
+    throw new Error(`Error : ${error.message}`)
 
   }
   const user = await UserModel.create({

@@ -4,6 +4,12 @@ const UserModel = require("../Models/userModel");
 const LoginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   let user = await UserModel.findOne({ userEmail: email });
+  user.business.sort((a , b)=>{
+    return Number(a.businessLevel) - Number(b.businessLevel);
+  })
+  console.log('====================================');
+  console.log(user);
+  console.log('====================================');
   let total 
   try {
     if (!user) return res.status(400).json({ message: "Email not found" });
@@ -20,9 +26,10 @@ const LoginUser = asyncHandler(async (req, res) => {
 console.log('====================================');
 console.log(dataArray);
 console.log('====================================');
+
   
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error.message)
   }
 
   return res.status(200).json( {"user" : user , "totalTeam" : total});
