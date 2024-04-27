@@ -1,11 +1,71 @@
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import { FaFileAlt } from "react-icons/fa";
 import { Modal, Paper, Typography, Button } from '@mui/material';
-import { Padding } from "@mui/icons-material";
+import axios from "axios";
+import backend from "../backend";
+import { ToastContainer } from "react-toastify";
+import { CircularProgress } from "@mui/material";
+import "react-toastify/dist/ReactToastify.css";
 
 const INRDeposit = () =>{
     const [open, setOpen] = useState(false);
+    const [depositeList, setDepositeList] = useState([]);
+    const [depositeFee, setDepositeFee] = useState(0);
+    const [depositePhoto, setDepositePhoto] = useState("");
+    const [depositeMode, setDepositeMode] = useState("");
 
+    const [loading, setLoading] = useState(false);
+    const ref = useRef()
+  
+    const uploadFiles = async (e) => {
+      const { files } = e.target;
+      console.log(e);
+      setLoading(true);
+      const data = new FormData();
+      data.append("file", files[0]);
+      data.append("upload_preset", "solardealership");
+      data.append("cloud_name", "dkm3nxmk5");
+      await fetch("https://api.cloudinary.com/v1_1/dkm3nxmk5/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (
+            files[0].type === "image/jpeg" ||
+            files[0].type === "image/jpg" ||
+            files[0].type === "image/png"
+          )
+            setDepositePhoto(data.url);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setLoading(false);
+    };
+  
+    const handleUpload = async(e)=>{
+      e.preventDefault()
+      try {
+        const response = await axios.post(`${backend}/deposite/` , {
+          depositeAmount : parseInt(depositeFee),
+    depositePhoto : depositePhoto,
+    depositeMode : depositeMode,
+    userEmail :JSON.parse(localStorage.getItem("userInfo")).user.userEmail,
+    introducerCode : JSON.parse(localStorage.getItem("userInfo")).user.introducerCode,
+    userId :JSON.parse(localStorage.getItem("userInfo")).user.userId
+        });
+        setDepositeFee(0)
+        setDepositeMode("")
+  ref.current.value=""
+  setDepositePhoto("")
+        console.log('====================================');
+        console.log(response);
+        console.log('====================================');
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
   const handleOpen = () => {
     setOpen(true);
   };
@@ -28,7 +88,36 @@ const INRDeposit = () =>{
     e.preventDefault();
   };
 
+  const fetchUsers = useCallback(
+    async () => {
+      try {
+        const response = await axios.post(`${backend}/deposite/user/${JSON.parse(localStorage.getItem("userInfo")).user.userEmail}`);
+        setDepositeList(response.data); // Set fetched users to state
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    },
+    []
+  )
+
+  useEffect(() => {
+    fetchUsers()
+  }, [])
+  
+
+
   return (
+
+    <>
+    {loading ? (
+
+      <div className="loader" style={{ color: "black" }}>
+    Please Wait Your File is Uploading......
+    <CircularProgress />
+  </div>
+) : null}
+<ToastContainer />
     <div className="container mx-auto my-5">
       {showFundRequest ? (
         <div style={{ marginTop: "45px", marginLeft:"65px" }} className="directmember">
@@ -42,15 +131,28 @@ const INRDeposit = () =>{
           >
             View Fund Requests
           </button>
-          <form>
+          <form onSubmit={handleUpload}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="mb-4">
-              <label htmlFor="name" className="block font-semibold">Amount (INR)*</label>
-              <input type="text" id="name" className="rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 " required style={{width:"75%", height:"45px"}}/>
+              <label htmlFor="fee" className="block font-semibold">Amount (INR)*</label>
+              <input type="number" value={depositeFee}
+              onChange={(e)=>setDepositeFee(e.target.value)}
+               id="fee" className="rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 " required style={{width:"75%", height:"45px"}}/>
             </div>
             <div className="mb-4">
-              <label htmlFor="mobile" className="block font-semibold">Payment Mode *</label>
-              <input type="text"id="mobile" className=" rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required style={{width:"75%", height:"45px"}}/>
+              <label htmlFor="mode" className="block font-semibold">Payment Mode *</label>
+              <input type="text"id="mode"
+              value={depositeMode}
+              onChange={(e)=>setDepositeMode(e.target.value)}
+               className=" rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required style={{width:"75%", height:"45px"}}/>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="photo" className="block font-semibold">Payment Photo *</label>
+              <input type="file" accept="image/*"
+                  id="photo"
+                  ref={ref}
+                  onChange={uploadFiles}
+               className=" rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required style={{width:"75%", height:"45px"}}/>
             </div>
           </div>
           <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4">Submit</button>
@@ -82,13 +184,17 @@ const INRDeposit = () =>{
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="border px-4 py-2">1.</td>
-                                <td className="border px-4 py-2">129.870130</td>
-                                <td className="border px-4 py-2">30-10-2022</td>
+                        {
+                          depositeList?.map((item , index)=>(
+                            <tr key={item._id}>
+                                <td className="border px-4 py-2">{index+1}</td>
+                                <td className="border px-4 py-2"> {item?.depositeAmount} </td>
+                                <td className="border px-4 py-2"> {item?.depositeDate} </td>
                                 <td className="border px-4 py-2"><Button onClick={handleOpen}>View Details</Button></td>
-                                <td className="border px-4 py-2">Accepted on 30-10-2022</td>
+                                <td className="border px-4 py-2"> {item?.depositeStatus} </td>
                             </tr>
+                          ))
+                        }
                         </tbody>
                     </table>
                 </div>
@@ -160,6 +266,7 @@ const INRDeposit = () =>{
         </div>
       )}
     </div>
+    </>
   );
     
 }

@@ -57,6 +57,10 @@ const UserSchema = mongoose.Schema(
       type : Number,
       default : 0
     },
+    totalIncome:{
+      type : Number,
+      default : 0
+    },
     userEmail: {
       type: String,
       require: true,

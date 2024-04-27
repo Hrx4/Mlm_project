@@ -4,6 +4,7 @@ import MainDashboard from '../Dashboard';
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import ClearIcon from "@mui/icons-material/Clear";
 import AdminDashboard from '../../components/AdminDashboard';
+import DepositeList from '../../components/DepositeList';
 
 const AdminMainPage = () => {
 
@@ -109,7 +110,7 @@ const AdminMainPage = () => {
           className="mainpage"
         >
           {noteView === "Dashboard" ? (
-            <AdminDashboard/>
+            <DepositeList/>
           ) : null}
          
          

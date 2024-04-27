@@ -7,9 +7,6 @@ const LoginUser = asyncHandler(async (req, res) => {
   user.business.sort((a , b)=>{
     return Number(a.businessLevel) - Number(b.businessLevel);
   })
-  console.log('====================================');
-  console.log(user);
-  console.log('====================================');
   let total 
   try {
     if (!user) return res.status(400).json({ message: "Email not found" });
@@ -23,10 +20,8 @@ const LoginUser = asyncHandler(async (req, res) => {
 
   })
   const dataArray = await Promise.all(userdata);
-console.log('====================================');
-console.log(dataArray);
-console.log('====================================');
-
+  user.totalIncome = user.levelIncome + user.selfIncome;
+  user.save();
   
   } catch (error) {
     throw new Error(error.message)

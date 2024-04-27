@@ -4,7 +4,7 @@ import axios from 'axios'
 import { ToastContainer, toast } from "react-toastify";
 import { CircularProgress, keyframes } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
-import backend from "../backend";
+import backend from "../backend"
 
 const AddEquity = () => {
   const [membershipFee, setMembershipFee] = useState(0);

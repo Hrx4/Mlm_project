@@ -15,23 +15,19 @@ const createUser = asyncHandler(async (req, res) => {
     userState,
     userPassword,
   } = req.body;
-  
 
   try {
     const createList = await idList.create({
       userName,
       userId: "",
-      introducerCode : introducerCode,
-      userEmail : userEmail
+      introducerCode: introducerCode,
+      userEmail: userEmail,
     });
-
-    
   } catch (error) {
-    console.log('====================================');
+    console.log("====================================");
     console.log(error);
-    console.log('====================================');
-    throw new Error(`Error : ${error.message}`)
-
+    console.log("====================================");
+    throw new Error(`Error : ${error.message}`);
   }
   const user = await UserModel.create({
     userId: "",
@@ -145,6 +141,7 @@ const updateProfile = asyncHandler(async (req, res) => {
       userNomineeRelation,
     }
   );
+
   console.log("====================================");
   console.log(updatedUser);
   console.log("====================================");

@@ -45,7 +45,7 @@ const MainDashboard = () => {
             <Card
               icon={<MdAttachMoney />}
               title="Total Income"
-              subtitle={`₹${userInfo?.levelIncome + userInfo?.selfIncome}`}
+              subtitle={`₹${userInfo?.totalIncome}`}
             />
             <Card
               icon={<MdAttachMoney />}
