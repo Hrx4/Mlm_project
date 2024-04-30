@@ -1,14 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FaKey } from "react-icons/fa";
 import axios from 'axios'
-import { ToastContainer, toast } from "react-toastify";
-import { CircularProgress, keyframes } from "@mui/material";
+import { ToastContainer } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 import backend from "../backend"
 
 const AddEquity = () => {
   const [membershipFee, setMembershipFee] = useState(0);
   const [membershipPhoto, setMembershipPhoto] = useState("");
+  const [userInfo, setUserInfo] = useState({})
   const [loading, setLoading] = useState(false);
   const ref = useRef()
 
@@ -58,6 +59,26 @@ setMembershipPhoto("")
     }
   }
 
+  const fetching = useCallback(async () => {
+    try {
+      const response = await axios.post(`${backend}/user/detail`, {
+        userEmail: JSON.parse(localStorage.getItem("userInfo"))?.user?.userEmail,
+      });
+      console.log(response.data);
+      setUserInfo(response.data[0]);
+      
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+  , []);
+
+
+  useEffect(() => {
+    fetching()
+  }, [])
+  
+
   return (
     <>
 
@@ -75,7 +96,10 @@ setMembershipPhoto("")
             <FaKey className="text-2xl mr-2" />
             <h1 className="text-xl font-bold">Add Fee</h1>
           </div>
-          <form onSubmit={handleUpload}>
+          {
+            (userInfo?.membershipStatus === "Null") ? 
+            (
+              <form onSubmit={handleUpload}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="mb-4">
                 <label htmlFor="name" className="block font-semibold">
@@ -112,6 +136,26 @@ setMembershipPhoto("")
               Submit
             </button>
           </form>
+            ):
+            (
+              <table>
+              <thead>
+                <th>MembershipFee</th>
+                <th>MembershipPhoto</th>
+                <th>MembershipStatus</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{userInfo?.membershipFee}</td>
+                    <td><img src={userInfo?.membershipPhoto} alt="" className=" h-60" /></td>
+                    <td>{userInfo?.membershipStatus}</td>
+
+                  </tr>
+                </tbody>
+                
+              </table>
+            )
+          }
         </div>
       </div>
     </>

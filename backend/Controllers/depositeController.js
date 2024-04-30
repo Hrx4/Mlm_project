@@ -52,12 +52,18 @@ const acceptDeposite = asyncHandler(async (req, res) => {
         return res.status(404).json({ message: "Invalid Introductur Code" });
 
       parentUser.levelIncome += depositeAmount * data[0];
-      parentUser.business.push({
-        businessId: userId,
-        businessName: businessName,
-        businessMoney: depositeAmount * data[0],
-        businessLevel: 1,
-      });
+      let currentIndex =0;
+      if(parentUser.business.find((item , ind) => {
+        currentIndex=ind;
+        return item.businessId===userId})){
+          parentUser.business[currentIndex] = {
+            businessId: userId,
+            businessName: businessName,
+            businessMoney: parentUser.business[currentIndex].businessMoney + (depositeAmount * data[0]),
+            businessLevel: 1,
+          }
+        }
+      
 
       const parentSize = parentChild.length;
 
@@ -65,25 +71,26 @@ const acceptDeposite = asyncHandler(async (req, res) => {
         let currentParent = await UserModel.findOne({
           userId: parentChild[parentSize - i - 1],
         });
-        console.log("====================================");
-        console.log("current : ", currentParent);
-        console.log("====================================");
         let currentParentChildern = currentParent.childUsers.length;
         let maxiLevel = currentParentChildern * 5;
         if (currentParentChildern >= 4) maxiLevel = 20;
         if (maxiLevel <= i) {
-          console.log("====================================");
-          console.log(maxiLevel, i);
-          console.log("====================================");
           continue;
         }
         currentParent.levelIncome += depositeAmount * data[i];
-        currentParent.business.push({
-          businessId: userId,
-          businessName: businessName,
-          businessMoney: depositeAmount * data[i],
-          businessLevel: i + 1,
-        });
+        let curInd =0;
+        if(currentParent.business.find((item , ind) => {
+          curInd=ind;
+          return item.businessId===userId})){
+            currentParent.business[curInd] = {
+              businessId: userId,
+              businessName: businessName,
+              businessMoney: currentParent.business[curInd].businessMoney + (depositeAmount * data[0]),
+              businessLevel: i+1,
+            }
+          }
+
+       
         const parentSave = await currentParent.save();
         
       }

@@ -35,11 +35,11 @@ const acceptUser = asyncHandler(async (req, res) => {
       console.log("====================================");
 
       parentUser.levelIncome += membershipFee * data[0];
-      parentUser.business.push({
-        businessId: userId,
-        businessName: businessName,
-        businessMoney: membershipFee * data[0],
-        businessLevel: 1,
+        parentUser.business.push({
+          businessId: userId,
+          businessName: businessName,
+          businessMoney: membershipFee * data[0],
+          businessLevel: 1,
       });
 
       const parentSize = parentChild.length;
@@ -55,9 +55,6 @@ const acceptUser = asyncHandler(async (req, res) => {
         let maxiLevel = currentParentChildern * 5;
         if (currentParentChildern >= 4) maxiLevel = 20;
         if (maxiLevel <= i) {
-          console.log("====================================");
-          console.log(maxiLevel, i);
-          console.log("====================================");
           continue;
         }
         currentParent.levelIncome += membershipFee * data[i];
@@ -68,9 +65,7 @@ const acceptUser = asyncHandler(async (req, res) => {
           businessLevel: i + 1,
         });
         const parentSave = await currentParent.save();
-        console.log("====================================");
-        console.log("parentsave : ", parentSave);
-        console.log("====================================");
+
       }
 
       parentChild.map(async (item, index) => {
@@ -106,6 +101,7 @@ const acceptUser = asyncHandler(async (req, res) => {
       userStatus: "Active",
       levelParent: parentChild,
       selfIncome: membershipFee,
+      membershipStatus : "Active"
     }
   );
   const x = await idList.deleteOne({ userEmail: userEmail });

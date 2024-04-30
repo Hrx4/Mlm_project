@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FiUser } from 'react-icons/fi';
+import backend from "../backend";
+import axios from "axios";
+
 
 const DirectMember = () => {
+    const [userInfo, setUserInfo] = useState([])
+
+    const fetching = useCallback(async () => {
+        try {
+          const response = await axios.post(`${backend}/user/alldetail`, {
+            userList: JSON.parse(localStorage.getItem("userInfo"))?.user?.childUsers,
+          });
+          console.log(response.data);
+          setUserInfo(response.data);
+          
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+      , []);
+    
+    
+      useEffect(() => {
+        fetching()
+      }, [])
+
     return (
         <>
 
@@ -19,25 +43,28 @@ const DirectMember = () => {
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Name</th>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Mobile</th>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Email</th>
-                                <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Joining Date</th>
-                                <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Status</th>
+
+                                {/* <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Joining Date</th>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Package</th>
-                                <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Business</th>
+                                <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Business</th> */}
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="border px-4 py-2">1.</td>
-                                <td className="border px-4 py-2">NEWINS</td>
-                                <td className="border px-4 py-2">Pamela</td>
-                                <td className="border px-4 py-2">12345456</td>
-                                <td className="border px-4 py-2">t123@gmail.com</td>
-                                <td className="border px-4 py-2">15-11-2022</td>
-                                <td className="border px-4 py-2">Employee</td>
+                        {
+                            userInfo?.map((item , index)=>(
+                                <tr>
+                                <td className="border px-4 py-2">{index+1}</td>
+                                <td className="border px-4 py-2">{item.userId}</td>
+                                <td className="border px-4 py-2">{item.userName}</td>
+                                <td className="border px-4 py-2">{item.userMobile}</td>
+                                <td className="border px-4 py-2">{item.userEmail}</td>
+                                {/* <td className="border px-4 py-2">15-11-2022</td>
                                 <td className="border px-4 py-2">3456</td>
-                                <td className="border px-4 py-2">0.00</td>
+                                <td className="border px-4 py-2">0.00</td> */}
 
                             </tr>
+                            ))
+                        }
                         </tbody>
                     </table>
                 </div>

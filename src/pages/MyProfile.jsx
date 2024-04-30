@@ -1,9 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FiUser } from "react-icons/fi";
 import backend from "../backend";
 const MyProfile = () => {
-  const [userInfo, setUserInfo] = useState({});
   const [userName, setUserName] = useState("");
   const [userMobile, setUserMobile] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -15,84 +14,67 @@ const MyProfile = () => {
   const [userState, setUserState] = useState("");
   const [userNominee, setUserNominee] = useState("");
   const [userNomineeRelation, setUserNomineeRelation] = useState("");
-  const [check, setCheck] = useState(true)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("====================================");
-      console.log(userName);
-      console.log("====================================");
       const response = await axios.put(
         `${backend}/user/profile/${
           JSON.parse(localStorage.getItem("userInfo"))?.user?.userId
         }`,
         {
-          userName : userName,
-          userMobile : userMobile,
-          userEmail : userEmail,
-          userCountry : userCountry,
-          userState : userState,
-          userFather : userFather,
-          userDob : userDob,
-          userAdhar : userAdhar,
-          userGender : userGender,
-          userNominee : userNominee,
-          userNomineeRelation : userNomineeRelation,
+          userName: userName,
+          userMobile: userMobile,
+          userEmail: userEmail,
+          userCountry: userCountry,
+          userState: userState,
+          userFather: userFather,
+          userDob: userDob,
+          userAdhar: userAdhar,
+          userGender: userGender,
+          userNominee: userNominee,
+          userNomineeRelation: userNomineeRelation,
         }
       );
-      console.log("====================================");
-      console.log(userName, response.data.userName);
-      console.log("====================================");
       console.log(response.data);
       if (response.status === 201) {
-        localStorage.setItem(
-          "userInfo",
-          JSON.stringify({
-            user: response.data,
-            totalTeam: userInfo?.totalTeam,
-          })
-        );
-        setUserInfo({
-          user: response.data,
-          totalTeam: userInfo?.totalTeam,
-        });
-        setCheck(false)
         // window.location.reload();
+        alert("Profile Updated")
+
       }
-      
     } catch (error) {
+      alert("Error Occured")
       console.error("Error fetching data:", error);
     }
   };
 
-  useEffect(() => {
-    if(check){
-      setUserInfo(JSON.parse(localStorage.getItem("userInfo")));
-    setUserName(JSON.parse(localStorage.getItem("userInfo"))?.user?.userName);
-    setUserMobile(
-      JSON.parse(localStorage.getItem("userInfo"))?.user?.userMobile
-    );
-    setUserEmail(JSON.parse(localStorage.getItem("userInfo"))?.user?.userEmail);
-    setUserFather(
-      JSON.parse(localStorage.getItem("userInfo"))?.user?.userFather
-    );
-    setUserDob(JSON.parse(localStorage.getItem("userInfo"))?.user?.userDob);
-    setUserAdhar(JSON.parse(localStorage.getItem("userInfo"))?.user?.userAdhar);
-    setUserGender(
-      JSON.parse(localStorage.getItem("userInfo"))?.user?.userGender
-    );
-    setUserCountry(
-      JSON.parse(localStorage.getItem("userInfo"))?.user?.userCountry
-    );
-    setUserState(JSON.parse(localStorage.getItem("userInfo"))?.user?.userState);
-    setUserNominee(
-      JSON.parse(localStorage.getItem("userInfo"))?.user?.userNominee
-    );
-    setUserNomineeRelation(
-      JSON.parse(localStorage.getItem("userInfo"))?.user?.userNomineeRelation
-    );
+  const fetching = useCallback(async () => {
+    try {
+      const response = await axios.post(`${backend}/user/detail`, {
+        userEmail: JSON.parse(localStorage.getItem("userInfo"))?.user?.userEmail,
+      });
+      console.log(response.data);
+      setUserName(response.data[0]?.userName);
+      setUserMobile(response.data[0]?.userMobile);
+      setUserEmail(response.data[0]?.userEmail);
+      setUserFather(response.data[0]?.userFather);
+      setUserDob(response.data[0]?.userDob);
+      setUserAdhar(response.data[0]?.userAdhar);
+      setUserGender(response.data[0]?.userGender);
+      setUserCountry(response.data[0]?.userCountry);
+      setUserState(response.data[0]?.userState);
+      setUserNominee(response.data[0]?.userNominee);
+      setUserNomineeRelation(response.data[0]?.userNomineeRelation);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
+  }
+  , []);
+
+  useEffect(() => {
+    
+    fetching()
+    
   }, []);
 
   return (
@@ -111,6 +93,7 @@ const MyProfile = () => {
               <input
                 type="text"
                 id="name"
+                disabled
                 value={userName}
                 onChange={(e) => {
                   setUserName(e.target.value);
@@ -139,6 +122,7 @@ const MyProfile = () => {
                 type="email"
                 id="email"
                 value={userEmail}
+                disabled
                 onChange={(e) => setUserEmail(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
               />

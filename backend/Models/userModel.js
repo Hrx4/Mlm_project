@@ -146,6 +146,18 @@ const UserSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    membershipFee : {
+      type : Number,
+      default :0
+    },
+    membershipPhoto : {
+      type : String,
+      default : ""
+    },
+    membershipStatus : {
+      type : String,
+      default : "Null"
+    }
   },
   {
     timestamps: true,

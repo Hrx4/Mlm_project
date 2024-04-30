@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const idList = require("../Models/idList");
+const userModel = require("../Models/userModel");
 
 const membershipFeeUpload = asyncHandler(async(req , res)=>{
    const {membershipFee , membershipPhoto , membershipId} = req.body;
@@ -10,6 +11,13 @@ const membershipFeeUpload = asyncHandler(async(req , res)=>{
             membershipFee : parseInt(membershipFee),
             membershipPhoto : membershipPhoto
         })
+
+        await userModel.findOneAndUpdate({userEmail : membershipId} , {
+         membershipFee : membershipFee,
+         membershipPhoto : membershipPhoto,
+         membershipStatus : "Not Active"
+        })
+
    } catch (error) {
     throw new Error(error.message)
    }

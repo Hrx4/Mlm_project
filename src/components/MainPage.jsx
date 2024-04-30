@@ -409,9 +409,7 @@ const handleDematIncome = async () => {
                       <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleAddEuity}>
                         Add Fee
                       </li>
-                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleViewEquity}>
-                        View Fee
-                      </li>
+                     
                     </ul>
                   )}
                 </li>
@@ -476,9 +474,7 @@ const handleDematIncome = async () => {
                       <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleINRDeposit}>
                         INR Deposit
                       </li>
-                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleDepositReport}>
-                        Deposit Report
-                      </li>
+                      
                     </ul>
                   )}
                 </li>
@@ -506,15 +502,7 @@ const handleDematIncome = async () => {
                   </span>
                   {items.isOpen && (
                     <ul style={{ padding: 10 }}>
-                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleSelfIncome}>
-                        Self Income
-                      </li>
-                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleLevelIncome}>
-                        Level Income
-                      </li>
-                      <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleDirectIncome}>
-                        Direct Income
-                      </li>
+                      
                       <li style={{ marginTop: 10, listStyleType:"disc", marginLeft:"20px" }} onClick={handleDematIncome}>
                         Demat Income
                       </li>

@@ -6,6 +6,7 @@ const WithdrawRequest = () =>{
 
   const [userInfo, setuserInfo] = useState({});
   const [show, setShow] = useState(true)
+  const [amount, setAmount] = useState(0)
 
   useEffect(() => {
     setuserInfo(JSON.parse(localStorage.getItem("userInfo"))?.user);
@@ -37,7 +38,7 @@ const WithdrawRequest = () =>{
         </div>
 
         <div className=" w-full flex justify-between">
-          <input type="Number" placeholder="Enter Amount" className="p-4 mt-4 rounded-lg" disabled={show} />
+          <input type="Number" placeholder="Enter Amount"  className="p-4 mt-4 rounded-lg border" value={amount} onChange={(e)=>setAmount(e.target.value)} disabled={show} />
           <button className="bg-sky-200 p-4 mt-4 rounded-lg" disabled={show} >
             Submit
           </button>

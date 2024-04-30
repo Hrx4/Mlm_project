@@ -43,10 +43,22 @@ const createUser = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
-// const getApply = asyncHandler(async (req, res) => {
-//   const applies = await applyModels.find();
-//   res.status(200).json(applies);
-// });
+const getUser = asyncHandler(async (req, res) => {
+  const { userEmail } = req.body;
+  const user = await UserModel.find({ userEmail });
+  res.status(200).json(user);
+});
+
+const getAllUser = asyncHandler(async (req, res) => {
+  const { userList } = req.body;
+
+  let list = userList.map(async (item, index) => {
+    let user = await UserModel.find({ userId: item });
+    user = await Promise.all(user);
+    return user[0];
+  });
+  res.status(200).json(await Promise.all(list));
+});
 
 // const deleteApply = asyncHandler(async (req, res) => {
 //   const apply = await applyModels.findById(req.params.id);
@@ -84,9 +96,6 @@ const updateBankInfo = asyncHandler(async (req, res) => {
       bankPan,
     }
   );
-  console.log("====================================");
-  console.log(updatedUser);
-  console.log("====================================");
   res.status(201).json(updatedUser);
 });
 
@@ -103,9 +112,18 @@ const updateKyc = asyncHandler(async (req, res) => {
       kycBank,
     }
   );
-  console.log("====================================");
-  console.log(updatedUser);
-  console.log("====================================");
+  res.status(201).json(updatedUser);
+});
+
+const updatePassword = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
+  const { userPassword, newUserPassword } = req.body;
+
+  const updatedUser = await UserModel.findOne({ userId: userId });
+  if (updatedUser.userPassword !== userPassword)
+    throw new Error("Wrong Password");
+  updatedUser.userPassword = newUserPassword;
+  await updatedUser.save();
   res.status(201).json(updatedUser);
 });
 
@@ -141,11 +159,15 @@ const updateProfile = asyncHandler(async (req, res) => {
       userNomineeRelation,
     }
   );
-
-  console.log("====================================");
-  console.log(updatedUser);
-  console.log("====================================");
   res.status(201).json(updatedUser);
 });
 
-module.exports = { createUser, updateBankInfo, updateKyc, updateProfile };
+module.exports = {
+  createUser,
+  updateBankInfo,
+  updateKyc,
+  updateProfile,
+  getUser,
+  getAllUser,
+  updatePassword,
+};
