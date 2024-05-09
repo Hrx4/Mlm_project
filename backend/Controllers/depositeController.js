@@ -128,9 +128,6 @@ const acceptDeposite = asyncHandler(async (req, res) => {
 const getDeposite = asyncHandler(async (req, res) => {
   let user = await depositeModel.find();
   console.log(user);
-  user = user.filter((item , index)=>{
-    return item.depositeStatus==="None"
-  })
   res.status(200).json(user);
 });
 

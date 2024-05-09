@@ -104,7 +104,10 @@ const acceptUser = asyncHandler(async (req, res) => {
       membershipStatus : "Active"
     }
   );
-  const x = await idList.deleteOne({ userEmail: userEmail });
+  const x = await idList.findOneAndUpdate({ userEmail: userEmail } , {
+    membershipStatus : "Accepted",
+    userId : userId
+  });
   res.status(201).json({ message: "User Accepted" });
 });
 

@@ -1,7 +1,56 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaFileAlt } from "react-icons/fa";
+import axios from "axios";
+import backend from "../backend";
 
-const WithdrawReport = () => {
+const WithdrawReport = ({role}) => {
+
+
+    const [userList, setUserList] = useState([])
+    const [toggle, setToggle] = useState(false)
+    const fetching = useCallback(async () => {
+        try {
+          const response = await axios.post(`${backend}/withdraw/all`, {
+            // userEmail: JSON.parse(localStorage.getItem("userInfo"))?.user?.userEmail,
+          });
+          console.log(response.data);
+          if(role==="adminReq") setUserList(response.data.filter((item)=>item.withdrawStatus==="pending"))
+            else if(role==="adminAll") setUserList(response.data.filter((item)=>item.withdrawStatus==="Accepted"))
+          else setUserList(response.data);
+          
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+      , []);
+
+      const handleAccept = async(id)=>{
+    try {
+      const response = await axios.put(
+        `${backend}/withdraw/accept/`,
+        {
+            withdrawId : id
+        }
+      );
+      console.log(response.data);
+      if (response.status === 201) {
+        // window.location.reload();
+        setToggle(!toggle)
+        alert("Withdraw accepted")
+
+      }
+    } catch (error) {
+      alert("Error Occured")
+      console.error("Error fetching data:", error);
+    }
+      }
+
+      useEffect(() => {
+        fetching()    
+        
+      }, [toggle]);
+
+
     return (
         <>
             <div style={{ marginTop: "45px", marginLeft: "65px" }} className="directmember">
@@ -10,34 +59,53 @@ const WithdrawReport = () => {
                     <h1 className="text-xl font-bold">Withdraw Report</h1>
                 </div>
                 <div className="bg-gray-200 p-4 rounded-lg flex justify-center ">
-                    <table className="table-auto w-75% justify-">
+                    <table className="table-auto w-75% ">
                         <thead>
                             <tr>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>SL.</th>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Amount</th>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Bank Details</th>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Request on</th>
-                                <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Paid</th>
-                                <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Action</th>
+                                {
+                                    role==='adminReq' ? (
+                                        <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Action</th>
+                                    ):
+                                    (
+                                        <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Status</th>
+                                    )
+                                }
+                                
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="border px-4 py-2">1.</td>
-                                <td className="border px-4 py-2"> 6.87</td>
-                                <td className="border px-4 py-2">Bank : ICICI BANK<br/>
-                                    Branch : TARAKESHWAR <br/>
-                                    A/c Name : Sagar Molla<br/>
-                                    A/c No. : 260901502082<br/>
-                                    Type : savings<br/>
-                                    IFSC : ICIC0002609<br/>
-                                    PAN No. : APIPM6464M</td>
-                                <td className="border px-4 py-2">03-07-2023</td>
-                                <td className="border px-4 py-2">Paid<br/>
-                                    on 04-07-2023</td>
-                                <td className="border px-4 py-2">Null</td>
+                            {
+                                userList?.map((item , index)=>(
+                                    <tr>
+                                <td className="border px-4 py-2">{index+1}</td>
+                                <td className="border px-4 py-2"> {item?.withdrawAmount}</td>
+                                <td className="border px-4 py-2">Bank : {item?.bankName}<br/>
+                                    Branch : {item.bankBranch} <br/>
+                                    A/c Name : {item.bankHolderName} <br/>
+                                    A/c No. : {item?.bankAccountNo}<br/>
+                                    Type : {item.bankAccountType} <br/>
+                                    IFSC : {item.bankIfsc}<br/>
+                                    PAN No. : {item.bankPan} </td>
+                                <td className="border px-4 py-2">{new Date(item.createdAt).toISOString().split('T')[0]}</td>
+                                
+                                
+
+                                {
+                                    role!=='adminReq' ? (
+                                        <td className="border px-4 py-2"> {item.withdrawStatus} </td>
+                                    ):
+                                    (
+                                        <td className="border px-4 py-2"> <button className=" p-2 bg-blue-400 rounded-xl" onClick={()=>handleAccept(item._id)} >Accept</button> </td>
+                                    )
+                                }
 
                             </tr>
+                                ))
+                            }
                         </tbody>
                     </table>
                 </div>

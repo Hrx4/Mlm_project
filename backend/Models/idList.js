@@ -22,6 +22,10 @@ const idList = mongoose.Schema(
     },
     membershipPhoto : {
       type : String
+    },
+    membershipStatus :{
+      type :String,
+      default : "pending"
     }
 
     

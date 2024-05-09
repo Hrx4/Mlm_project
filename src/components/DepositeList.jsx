@@ -4,7 +4,7 @@ import axios from 'axios'
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
-const DepositeList = () => {
+const DepositeList = ({role}) => {
 
     const [userList, setUserList] = useState([])
     const [first, setFirst] = useState(false)
@@ -16,7 +16,11 @@ const DepositeList = () => {
       async () => {
         try {
           const response = await axios.get(`${backend}/deposite/`);
-          setUserList(response.data); // Set fetched users to state
+          if(role==="all")
+          setUserList( response.data.filter((item)=>item.depositeStatus==="Accept") ); // Set fetched users to state
+          else 
+          setUserList( response.data.data.filter((item)=>item.depositeStatus!=="Accept") ); // Set fetched users to state
+
           console.log(response.data);
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -98,13 +102,24 @@ const DepositeList = () => {
             <td>{item?.depositeMode}</td>
             <td>{item?.userEmail}</td>
             <td>{item?.depositeDate}</td>
-            <td className=" flex gap-3">
+            {
+              (role!=="all")?
+              (
+                <td className=" flex gap-3">
               <button className=" bg-green-500 p-2 rounded-lg  font-bold" disabled={item?.depositePhoto?false : true} onClick={()=>handleSubmit(item)} >Accept</button>
-              <button className=" bg-red-500 p-2 rounded-lg font-bold text-white">decline</button>
+              {/* <button className=" bg-red-500 p-2 rounded-lg font-bold text-white">decline</button> */}
               <button className=" bg-blue-500 p-2 rounded-lg font-bold text-white" disabled={item?.depositePhoto?false : true} onClick={()=>{setOpen(true) , setPhoto(item?.depositePhoto)}
               }>View</button>
 
             </td>
+              )
+              :
+              (
+                <td>
+                  Accepted
+                </td>
+              )
+            }
           </tr>
             ))
           }

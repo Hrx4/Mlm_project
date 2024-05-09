@@ -44,8 +44,13 @@ const createUser = asyncHandler(async (req, res) => {
 });
 
 const getUser = asyncHandler(async (req, res) => {
-  const { userEmail } = req.body;
-  const user = await UserModel.find({ userEmail });
+  const { userEmail, userId } = req.body;
+  let user;
+  console.log("====================================");
+  console.log(userId);
+  console.log("====================================");
+  if (userId) user = await UserModel.find({ userId });
+  else user = await UserModel.find({ userEmail });
   res.status(200).json(user);
 });
 
@@ -162,6 +167,58 @@ const updateProfile = asyncHandler(async (req, res) => {
   res.status(201).json(updatedUser);
 });
 
+const updateUser = asyncHandler(async (req, res) => {
+  const {
+    userName,
+    userMobile,
+    userEmail,
+    userCountry,
+    userState,
+    userFather,
+    userDob,
+    userAdhar,
+    userGender,
+    userNominee,
+    userNomineeRelation,
+    bankIfsc,
+    bankName,
+    bankBranch,
+    bankAccountNo,
+    bankHolderName,
+    bankAccountType,
+    bankPan,
+  } = req.body;
+
+  const user = await UserModel.findOneAndUpdate({userEmail} , {
+    userName,
+    userMobile,
+    userEmail,
+    userCountry,
+    userState,
+    userFather,
+    userDob,
+    userAdhar,
+    userGender,
+    userNominee,
+    userNomineeRelation,
+    bankIfsc,
+    bankName,
+    bankBranch,
+    bankAccountNo,
+    bankHolderName,
+    bankAccountType,
+    bankPan,
+  })
+
+  res.status(201).json(user);
+
+});
+
+const adminUserList = asyncHandler(async(req , res)=>{
+  const list = await UserModel.find();
+  res.status(200).json(list)
+})
+
 module.exports = {
   createUser,
   updateBankInfo,
@@ -170,4 +227,6 @@ module.exports = {
   getUser,
   getAllUser,
   updatePassword,
+  updateUser,
+  adminUserList
 };
