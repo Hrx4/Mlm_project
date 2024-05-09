@@ -95,24 +95,6 @@ const AllUser = () => {
       const response = await axios.post(`${backend}/user/list`);
       console.log(response.data);
       setCurrentUser(response.data)
-      // setUserName(response.data[0]?.userName);
-      // setUserMobile(response.data[0]?.userMobile);
-      // setUserEmail(response.data[0]?.userEmail);
-      // setUserFather(response.data[0]?.userFather);
-      // setUserDob(response.data[0]?.userDob);
-      // setUserAdhar(response.data[0]?.userAdhar);
-      // setUserGender(response.data[0]?.userGender);
-      // setUserCountry(response.data[0]?.userCountry);
-      // setUserState(response.data[0]?.userState);
-      // setUserNominee(response.data[0]?.userNominee);
-      // setUserNomineeRelation(response.data[0]?.userNomineeRelation);
-      // setBankIfsc(response.data[0]?.bankIfsc);
-      // setBankName(response.data[0]?.bankName);
-      // setBankBranch(response.data[0]?.bankBranch);
-      // setBankAccountNo(response.data[0]?.bankAccountNo);
-      // setBankHolderName(response.data[0]?.bankHolderName);
-      // setBankAccountType(response.data[0]?.bankAccountType);
-      // setBankPan(response.data[0]?.bankPan);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

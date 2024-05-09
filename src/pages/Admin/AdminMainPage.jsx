@@ -6,13 +6,13 @@ import ClearIcon from "@mui/icons-material/Clear";
 import AdminDashboard from "../../components/AdminDashboard";
 import DepositeList from "../../components/DepositeList";
 import LevelView from "../LevelView";
-import AllUser from "./AllUser";
+import AllUser from "./allUser";
 import WithdrawRequest from "../WithdrawRequest";
 import WithdrawReport from "../WithdrawReport";
 
 const AdminMainPage = () => {
   const ref = useRef(null);
-  const [noteView, setNoteView] = useState("Dashboard");
+  const [noteView, setNoteView] = useState("MyProfile");
   const [slideOpen, setSlideOpen] = useState(false);
   const [Dashboard, setDashboard] = useState([
     {
