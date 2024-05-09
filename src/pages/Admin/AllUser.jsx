@@ -8,6 +8,8 @@ const AllUser = () => {
   const [userName, setUserName] = useState("");
   const [userMobile, setUserMobile] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+
   const [userFather, setUserFather] = useState("");
   const [userDob, setUserDob] = useState("");
   const [userAdhar, setUserAdhar] = useState("");
@@ -32,6 +34,7 @@ const AllUser = () => {
     setUserName(item?.userName);
       setUserMobile(item?.userMobile);
       setUserEmail(item?.userEmail);
+      setUserPassword(item?.userPassword);
       setUserFather(item?.userFather);
       setUserDob(item?.userDob);
       setUserAdhar(item?.userAdhar);
@@ -60,6 +63,7 @@ const AllUser = () => {
         {
           userName: userName,
           userMobile: userMobile,
+          userPassword,
           userEmail: userEmail,
           userCountry: userCountry,
           userState: userState,
@@ -139,7 +143,7 @@ const AllUser = () => {
               <input
                 type="text"
                 id="name"
-                disabled
+                
                 value={userName}
                 onChange={(e) => {
                   setUserName(e.target.value);
@@ -168,8 +172,21 @@ const AllUser = () => {
                 type="email"
                 id="email"
                 value={userEmail}
-                disabled
+                
                 onChange={(e) => setUserEmail(e.target.value)}
+                className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="email" className="block font-semibold">
+                Password
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={userPassword}
+                
+                onChange={(e) => setUserPassword(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
               />
             </div>

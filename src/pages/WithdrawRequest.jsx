@@ -43,7 +43,7 @@ const WithdrawRequest = () =>{
   useEffect(() => {
     fetching()    
     const date = new Date();
-    if(date.getDate()===9 || date.getDate()===17) setShow(false)
+    if(date.getDate()===5 || date.getDate()===17) setShow(false)
     
   }, []);
 
