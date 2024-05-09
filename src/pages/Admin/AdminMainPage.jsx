@@ -6,7 +6,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import AdminDashboard from "../../components/AdminDashboard";
 import DepositeList from "../../components/DepositeList";
 import LevelView from "../LevelView";
-import AllUser from "./allUser";
+import AllUser from "./AllUser";
 import WithdrawRequest from "../WithdrawRequest";
 import WithdrawReport from "../WithdrawReport";
 
