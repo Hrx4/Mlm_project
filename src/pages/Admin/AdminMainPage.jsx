@@ -1,4 +1,4 @@
-import React, { useRef, useState,useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import MainDashboard from "../Dashboard";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
@@ -275,7 +275,7 @@ const AdminMainPage = () => {
   };
 
   useEffect(() => {
-    handleMembershipReq();
+    handleMyProfile();
   }, []);
 
   return (
@@ -307,7 +307,6 @@ const AdminMainPage = () => {
           className="super-choose"
           style={{ display: "flex", overflowY: "scroll" }}
         >
-          
           <div
             style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
             className="note__btn"
@@ -338,8 +337,6 @@ const AdminMainPage = () => {
                       >
                         All User
                       </li>
-                      
-                      
                     </ul>
                   )}
                 </li>
@@ -533,7 +530,7 @@ const AdminMainPage = () => {
                         }}
                         onClick={handleDepositReport}
                       >
-                        All Deposite 
+                        All Deposite
                       </li>
                     </ul>
                   )}
@@ -636,15 +633,19 @@ const AdminMainPage = () => {
           }}
           className="mainpage"
         >
-           {noteView === "MembershipReq" ? <AdminDashboard /> : null}
-           {noteView === "memberList" ? <AdminDashboard role={"all"} /> : null}
-           {noteView === "INRDeposit" ? <DepositeList /> : null}
-           {noteView === "levelView" ? <LevelView check={"admin"}/> : null}
-           {noteView === "MyProfile" ? <AllUser /> : null}
-          {noteView === "withdrawRequest" ? <WithdrawReport role={"adminReq"} /> : null}
-          {noteView === "withdrawReport" ? <WithdrawReport role={"adminAll"} /> : null}
+          {noteView === "MembershipReq" ? <AdminDashboard /> : null}
+          {noteView === "memberList" ? <AdminDashboard role={"all"} /> : null}
+          {noteView === "INRDeposit" ? <DepositeList /> : null}
+          {noteView === "levelView" ? <LevelView check={"admin"} /> : null}
+          {noteView === "MyProfile" ? <AllUser /> : null}
+          {noteView === "withdrawRequest" ? (
+            <WithdrawReport role={"adminReq"} />
+          ) : null}
+          {noteView === "withdrawReport" ? (
+            <WithdrawReport role={"adminAll"} />
+          ) : null}
           {noteView === "DepositReport" ? <DepositeList role={"all"} /> : null}
-         {/* {noteView === "MyProfile" ? <MyProfile /> : null}
+          {/* {noteView === "MyProfile" ? <MyProfile /> : null}
           {noteView === "MyPassword" ? <MyPassword /> : null}
           {noteView === "KYCUpload" ? <KYCUpload /> : null}
           {noteView === "addMember" ? <AddMember /> : null}
