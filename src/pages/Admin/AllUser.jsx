@@ -28,6 +28,9 @@ const AllUser = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const [currentUser, setCurrentUser] = useState([])
   const [userInput, setUserInput] = useState("")
+  const [selfIncome, setSelfIncome] = useState("")
+  const [levelIncome, setLevelIncome] = useState("")
+
 
 
   const handleModalOpen = (item )=>{
@@ -50,6 +53,9 @@ const AllUser = () => {
       setBankHolderName(item?.bankHolderName);
       setBankAccountType(item?.bankAccountType);
       setBankPan(item?.bankPan);
+      setSelfIncome(item?.selfIncome);
+      setLevelIncome(item?.levelIncome);
+
       setModalOpen(true)
 
   }
@@ -395,6 +401,29 @@ const AllUser = () => {
                   setBankPan(e.target.value);
                   console.log(e.target.value);
                 }}
+                type="text"
+                id="country"
+                className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
+                
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="country" className="block font-semibold">
+                Self Income
+              </label>
+              <input
+                value={selfIncome}
+                type="text"
+                id="country"
+                className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
+                
+              />
+            </div><div className="mb-4">
+              <label htmlFor="country" className="block font-semibold">
+                Level Income
+              </label>
+              <input
+                value={levelIncome}
                 type="text"
                 id="country"
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
