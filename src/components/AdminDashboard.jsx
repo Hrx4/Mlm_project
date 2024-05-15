@@ -20,7 +20,7 @@ const AdminDashboard = ({ role }) => {
         ); // Set fetched users to state
       else
         setUserList(
-          response.data.filter(() => item.membershipStatus !== "Accepted")
+          response.data.filter((item) => item.membershipStatus !== "Accepted")
         ); // Set fetched users to state
       console.log(response.data);
     } catch (error) {
@@ -82,7 +82,6 @@ const AdminDashboard = ({ role }) => {
             <th>Introducer Code</th>
             <th>Membership Fee</th>
             <th>id</th>
-            <th>Action</th>
           </thead>
           <tbody>
             {userList?.map((item, index) => (
@@ -140,9 +139,7 @@ const AdminDashboard = ({ role }) => {
                     <td>
                       {item.userId}
                     </td>
-                    <td>
-                      Accepted
-                    </td>
+                    
                     </>
                   )
                 }
