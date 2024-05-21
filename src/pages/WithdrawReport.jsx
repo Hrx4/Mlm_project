@@ -16,7 +16,7 @@ const WithdrawReport = ({role}) => {
           console.log(response.data);
           if(role==="adminReq") setUserList(response.data.filter((item)=>item.withdrawStatus==="pending"))
             else if(role==="adminAll") setUserList(response.data.filter((item)=>item.withdrawStatus==="Accepted"))
-          else setUserList(response.data);
+          else setUserList(response.data.filter((item)=>item.userEmail===JSON.parse(localStorage.getItem("userInfo"))?.user?.userEmail))
           
         } catch (error) {
           console.error("Error fetching data:", error);
