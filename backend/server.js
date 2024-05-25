@@ -33,6 +33,7 @@ app.use("/login", require("./Routes/loginRoute"));
 app.use("/membership", require("./Routes/membershipRoutes"));
 app.use("/deposite", require("./Routes/depositeRoutes"));
 app.use("/withdraw", require("./Routes/withdrawRoutes"));
+app.use("/trading", require("./Routes/tradingRoutes"));
 
 app.listen(8080, () => {
   console.log(`Server is running on Port 8080`);

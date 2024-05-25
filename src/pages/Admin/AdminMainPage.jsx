@@ -9,6 +9,7 @@ import LevelView from "../LevelView";
 import AllUser from "./AllUser";
 import WithdrawRequest from "../WithdrawRequest";
 import WithdrawReport from "../WithdrawReport";
+import TradingReport from "../TradingReport";
 
 const AdminMainPage = () => {
   const ref = useRef(null);
@@ -66,6 +67,14 @@ const AdminMainPage = () => {
       // subItems: ["Withdraw request", "Withdraw report"],
     },
   ]);
+  const [trading, setTrading] = useState([
+    {
+      id: 1,
+      name: "▶ Trading",
+      isOpen: false,
+      subItems: ["Trading request", "Trading report"],
+    },
+  ]);
 
   const [income, setIncome] = useState([
     {
@@ -95,6 +104,15 @@ const AdminMainPage = () => {
       )
     );
   };
+  const toggleTrading = (itemId) => {
+    setTrading((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, isOpen: !item.isOpen } : item
+      )
+    );
+  };
+
+
 
   const toggleMember = (itemId) => {
     setMember((prevItems) =>
@@ -229,6 +247,20 @@ const AdminMainPage = () => {
 
   const handleWithdrawReport = async () => {
     setNoteView("withdrawReport");
+    ref.current.classList.add("slider__close");
+    ref.current.classList.remove("slider__open");
+    setSlideOpen(false);
+  };
+
+  const handleTradingRequest = async () => {
+    setNoteView("tradingRequest");
+    ref.current.classList.add("slider__close");
+    ref.current.classList.remove("slider__open");
+    setSlideOpen(false);
+  };
+
+  const handleTradingReport = async () => {
+    setNoteView("tradingReport");
     ref.current.classList.add("slider__close");
     ref.current.classList.remove("slider__open");
     setSlideOpen(false);
@@ -622,6 +654,55 @@ const AdminMainPage = () => {
               ))}
             </ul>
           </div>
+
+
+          <div
+            style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
+            className="note__btn"
+          >
+            <ul>
+              {trading.map((items) => (
+                <li key={items.id}>
+                  <span
+                    onClick={() => toggleTrading(items.id)}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: 17,
+                      textAlign: "left",
+                    }}
+                    className="note__btn"
+                  >
+                    {items.name}
+                  </span>
+                  {items.isOpen && (
+                    <ul style={{ padding: 10 }}>
+                      <li
+                        style={{
+                          marginTop: 10,
+                          listStyleType: "disc",
+                          marginLeft: "20px",
+                        }}
+                        onClick={handleTradingRequest}
+                      >
+                        Trading Request
+                      </li>
+                      <li
+                        style={{
+                          marginTop: 10,
+                          listStyleType: "disc",
+                          marginLeft: "20px",
+                        }}
+                        onClick={handleTradingReport}
+                      >
+                        Trading Report
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
         </div>
         <div
           style={{
@@ -645,6 +726,12 @@ const AdminMainPage = () => {
             <WithdrawReport role={"adminAll"} />
           ) : null}
           {noteView === "DepositReport" ? <DepositeList role={"all"} /> : null}
+          {noteView === "tradingRequest" ? (
+            <TradingReport role={"adminReq"} />
+          ) : null}
+          {noteView === "tradingReport" ? (
+            <TradingReport role={"adminAll"} />
+          ) : null}
           {/* {noteView === "MyProfile" ? <MyProfile /> : null}
           {noteView === "MyPassword" ? <MyPassword /> : null}
           {noteView === "KYCUpload" ? <KYCUpload /> : null}
