@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import backend from '../../backend';
@@ -11,12 +11,16 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
+  const [userAdhar, setUserAdhar] = useState("");
+  const [userDob, setUserDob] = useState("");
+  const [bankPan, setBankPan] = useState("");
+  const [userId, setUserId] = useState("");
+  const [userNo, setUserNo] = useState(0);
+
   const navigate = useNavigate();
 
   const handleSignUp = async(e) => {
     e.preventDefault();
-    // You can handle the form submission here
-    // For example, send the form data to an API endpoint
 
     try {
         const response = await axios.post(`${backend}/user/` , {
@@ -28,6 +32,10 @@ const SignUp = () => {
     userCountry : country,
     userState : state,
     userPassword : password,
+    userAdhar,
+    userDob,
+    bankPan,
+    userId 
         });
         console.log('====================================');
         console.log(response);
@@ -39,6 +47,40 @@ const SignUp = () => {
 
     
   };
+
+  const formatDate = (dateString)=> {
+    // Split the input date string by '-'
+    const parts = dateString.split('-');
+
+    // Reorder and concatenate the parts to form the desired output
+    const formattedDate = parts[0] + parts[1] + parts[2];
+
+    return formattedDate;
+}
+
+const handleUserId = (e)=>{
+  e.preventDefault();
+  setUserDob(e.target.value)
+  setUserId(('new'+formatDate(e.target.value) + userNo).toString())
+}
+
+const handleSignIn = async(e) => {
+  
+  try {
+      const response = await axios.get(`${backend}/user/` 
+  );
+      console.log(response.data);
+      setUserNo(response.data.length)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+
+};
+
+useEffect(() => {
+  handleSignIn()
+}, [])
+
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded shadow-md">
@@ -69,6 +111,21 @@ const SignUp = () => {
             value={introducerName}
             onChange={(e) => setIntroducerName(e.target.value)}
             
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="userId" className="block text-sm font-medium text-gray-600">
+            User Id*
+          </label>
+          <input
+            type="text"
+            id="userId"
+            className="mt-1 p-2 w-full border rounded-md"
+            value={userId}
+            disabled
+            // onChange={(e) => setMobileNo(e.target.value)}
+            required
           />
         </div>
 
@@ -129,6 +186,48 @@ const SignUp = () => {
         </div>
 
         <div className="mb-4">
+          <label htmlFor="dob" className="block text-sm font-medium text-gray-600">
+            Dob*
+          </label>
+          <input
+            type="date"
+            id="dob"
+            className="mt-1 p-2 w-full border rounded-md"
+            value={userDob}
+            onChange={(e) => handleUserId(e)}
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="userAdhar" className="block text-sm font-medium text-gray-600">
+            Aadhar no*
+          </label>
+          <input
+            type="text"
+            id="userAdhar"
+            className="mt-1 p-2 w-full border rounded-md"
+            value={userAdhar}
+            onChange={(e) => setUserAdhar(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="bankPan" className="block text-sm font-medium text-gray-600">
+            Pan No*
+          </label>
+          <input
+            type="text"
+            id="bankPan"
+            className="mt-1 p-2 w-full border rounded-md"
+            value={bankPan}
+            onChange={(e) => setBankPan(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="mb-4">
           <label htmlFor="state" className="block text-sm font-medium text-gray-600">
             State*
           </label>
@@ -164,7 +263,11 @@ const SignUp = () => {
         >
           Sign Up
         </button>
+        <div className=' text-black w-full flex justify-center items-center mt-4 cursor-pointer' onClick={()=>navigate('/signin')}>
+            Already Registered ? Go For Sign In 
+        </div>
       </form>
+
     </div>
   );
 };

@@ -7,17 +7,14 @@ import Box from "@mui/material/Box";
 const AdminDashboard = ({ role }) => {
   const [userList, setUserList] = useState([]);
   const [first, setFirst] = useState(false);
-  const [userInputs, setUserInputs] = useState({});
   const [open, setOpen] = useState(false);
   const [photo, setPhoto] = useState("");
 
   const fetchUsers = useCallback(async () => {
     try {
       const response = await axios.get(`${backend}/userlist`);
-      if (role === "all")
-        setUserList(
-          response.data
-        ); // Set fetched users to state
+      if (role === "all") setUserList(response.data.filter((item) => item.membershipStatus === "Accepted"));
+      // Set fetched users to state
       else
         setUserList(
           response.data.filter((item) => item.membershipStatus !== "Accepted")
@@ -50,26 +47,20 @@ const AdminDashboard = ({ role }) => {
     p: 4,
   };
 
-  const handleSubmit = async (email, introducerCode, fee) => {
+  const handleSubmit = async (email, introducerCode, fee , customer , userId) => {
     try {
       const response = await axios.post(`${backend}/userlist`, {
-        userId: userInputs[email],
         userEmail: email,
         introducerCode: introducerCode,
         membershipFee: parseInt(fee),
+        customer : customer,
+        userId : userId
       });
       setFirst(!first);
       check.current = true;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
-
-  const handleInputChange = (userEmail, value) => {
-    setUserInputs((prevInputs) => ({
-      ...prevInputs,
-      [userEmail]: value,
-    }));
   };
 
   return (
@@ -92,57 +83,46 @@ const AdminDashboard = ({ role }) => {
                   {item?.introducerCode ? item?.introducerCode : "No Code"}
                 </td>
                 <td>{item?.membershipFee}</td>
-                
-                {
-                  role!=="all" ? (
-                    <>
+                {role !== "all" ? (
+                  <>
                     <td>
-                  <input
-                    key={item?.userEmail}
-                    type="text"
-                    value={userInputs[item?.userEmail] || ""}
-                    onChange={(e) =>
-                      handleInputChange(item?.userEmail, e.target.value)
-                    }
-                  />
-                </td>
-                    <td className=" flex gap-3">
-                  <button
-                    className=" bg-green-500 p-2 rounded-lg  font-bold"
-                    disabled={item?.membershipPhoto ? false : true}
-                    onClick={() =>
-                      handleSubmit(
-                        item?.userEmail,
-                        item?.introducerCode,
-                        item?.membershipFee
-                      )
-                    }
-                  >
-                    Accept
-                  </button>
-                  <button className=" bg-red-500 p-2 rounded-lg font-bold text-white">
-                    decline
-                  </button>
-                  <button
-                    className=" bg-blue-500 p-2 rounded-lg font-bold text-white"
-                    disabled={item?.membershipPhoto ? false : true}
-                    onClick={() => {
-                      setOpen(true), setPhoto(item?.membershipPhoto);
-                    }}
-                  >
-                    View
-                  </button>
-                </td>
-                    </>
-                  ) :(
-                    <>
-                    <td>
-                      {item.userId}
+                    {item.userId}
                     </td>
-                    
-                    </>
-                  )
-                }
+                    <td className=" flex gap-3">
+                      <button
+                        className=" bg-green-500 p-2 rounded-lg  font-bold"
+                        disabled={item?.membershipPhoto ? false : true}
+                        onClick={() =>
+                          handleSubmit(
+                            item?.userEmail,
+                            item?.introducerCode,
+                            item?.membershipFee,
+                            item?.customer,
+                            item?.userId
+                          )
+                        }
+                      >
+                        Accept
+                      </button>
+                      <button className=" bg-red-500 p-2 rounded-lg font-bold text-white">
+                        decline
+                      </button>
+                      <button
+                        className=" bg-blue-500 p-2 rounded-lg font-bold text-white"
+                        disabled={item?.membershipPhoto ? false : true}
+                        onClick={() => {
+                          setOpen(true), setPhoto(item?.membershipPhoto);
+                        }}
+                      >
+                        View
+                      </button>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td>{item.userId}</td>
+                  </>
+                )}
               </tr>
             ))}
           </tbody>

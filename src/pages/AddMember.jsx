@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRocket } from "react-icons/fa";
 import backend from "../backend";
-import  axios from "axios";
+import axios from "axios";
 
 const AddMember = () => {
   const [introducerCode, setIntroducerCode] = useState("");
@@ -12,37 +12,82 @@ const AddMember = () => {
   const [userCountry, setUserCountry] = useState("");
   const [userState, setUserState] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [userAdhar, setUserAdhar] = useState("");
+  const [userDob, setUserDob] = useState("");
+  const [bankPan, setBankPan] = useState("");
+  const [userId, setUserId] = useState("");
+  const [userNo, setUserNo] = useState(0);
+  const [customer, setCustomer] = useState(false);
 
-  const handleSubmit =async(e)=>{
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post(`${backend}/user` , {
-        introducerCode : introducerCode,
-  introducerName : introducerName,
-  userName : userName,
-  userMobile : userMobile,
-  userEmail : userEmail,
-  userCountry : userCountry,
-  userState : userState,
-  userPassword : userPassword,
+      const response = await axios.post(`${backend}/user`, {
+        introducerCode: introducerCode,
+        introducerName: introducerName,
+        userName: userName,
+        userMobile: userMobile,
+        userEmail: userEmail,
+        userCountry: userCountry,
+        userState: userState,
+        userPassword: userPassword,
+        userAdhar,
+        userDob,
+        bankPan,
+        customer,
+        userId,
       });
-      setIntroducerCode("")
-      setIntroducerName("")
-      setUserName("")
-      setUserMobile("")
-      setUserEmail("")
-      setUserCountry("")
-      setUserState("")
-      setUserPassword("")
+      setIntroducerCode("");
+      setIntroducerName("");
+      setUserName("");
+      setUserMobile("");
+      setUserEmail("");
+      setUserCountry("");
+      setUserState("");
+      setUserPassword("");
+      setUserAdhar("");
+      setBankPan("");
+      setUserId("");
+      setUserDob("");
+      setCustomer(false)
 
-      console.log('====================================');
+      console.log("====================================");
       console.log(response);
-      console.log('====================================');
+      console.log("====================================");
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
-  }
-   
+  };
+
+  const formatDate = (dateString) => {
+    // Split the input date string by '-'
+    const parts = dateString.split("-");
+
+    // Reorder and concatenate the parts to form the desired output
+    const formattedDate = parts[0] + parts[1] + parts[2];
+
+    return formattedDate;
+  };
+
+  const handleUserId = (e) => {
+    e.preventDefault();
+    setUserDob(e.target.value);
+    setUserId(("new" + formatDate(e.target.value) + userNo).toString());
+  };
+
+  const handleSignIn = async (e) => {
+    try {
+      const response = await axios.get(`${backend}/user/`);
+      console.log(response.data);
+      setUserNo(response.data.length);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleSignIn();
+  }, []);
 
   return (
     <div className=" min-h-screen p-8" style={{ width: "100%" }}>
@@ -61,9 +106,8 @@ const AddMember = () => {
                 type="text"
                 id="name"
                 value={introducerCode}
-                onChange={(e)=>setIntroducerCode(e.target.value)}
+                onChange={(e) => setIntroducerCode(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
-                
               />
             </div>
             <div className="mb-4">
@@ -75,7 +119,24 @@ const AddMember = () => {
                 id="mobile"
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 value={introducerName}
-                onChange={(e)=>setIntroducerName(e.target.value)}
+                onChange={(e) => setIntroducerName(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="userId"
+                className="block text-sm font-medium text-gray-600"
+              >
+                User Id*
+              </label>
+              <input
+                type="text"
+                id="userId"
+                className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
+                value={userId}
+                disabled
+                // onChange={(e) => setMobileNo(e.target.value)}
+                required
               />
             </div>
             <div className="mb-4">
@@ -88,7 +149,7 @@ const AddMember = () => {
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
                 value={userName}
-                onChange={(e)=>setUserName(e.target.value)}
+                onChange={(e) => setUserName(e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -101,7 +162,7 @@ const AddMember = () => {
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
                 value={userMobile}
-                onChange={(e)=>setUserMobile(e.target.value)}
+                onChange={(e) => setUserMobile(e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -114,7 +175,7 @@ const AddMember = () => {
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
                 value={userEmail}
-                onChange={(e)=>setUserEmail(e.target.value)}
+                onChange={(e) => setUserEmail(e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -127,7 +188,7 @@ const AddMember = () => {
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
                 value={userPassword}
-                onChange={(e)=>setUserPassword(e.target.value)}
+                onChange={(e) => setUserPassword(e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -140,7 +201,7 @@ const AddMember = () => {
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
                 value={userCountry}
-                onChange={(e)=>setUserCountry(e.target.value)}
+                onChange={(e) => setUserCountry(e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -153,8 +214,77 @@ const AddMember = () => {
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
                 value={userState}
-                onChange={(e)=>setUserState(e.target.value)}
+                onChange={(e) => setUserState(e.target.value)}
               />
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="dob"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Dob*
+              </label>
+              <input
+                type="date"
+                id="dob"
+                className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
+                value={userDob}
+                onChange={(e) => handleUserId(e)}
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="userAdhar"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Aadhar no*
+              </label>
+              <input
+                type="text"
+                id="userAdhar"
+                className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
+                value={userAdhar}
+                onChange={(e) => setUserAdhar(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="bankPan"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Pan No*
+              </label>
+              <input
+                type="text"
+                id="bankPan"
+                className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
+                value={bankPan}
+                onChange={(e) => setBankPan(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="bankPan"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Customer*
+              </label>
+              <select
+                name="customer"
+                id="customer"
+                className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
+                value={customer}
+                onChange={(e)=>setCustomer(e.target.value)}
+              >
+                <option value="false">false</option>
+                <option value="true">true</option>
+              </select>
             </div>
           </div>
           <button

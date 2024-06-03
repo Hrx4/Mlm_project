@@ -10,6 +10,9 @@ import AllUser from "./AllUser";
 import WithdrawRequest from "../WithdrawRequest";
 import WithdrawReport from "../WithdrawReport";
 import TradingReport from "../TradingReport";
+import Refund from "../Refund";
+import RefundList from "../RefundList";
+import CustomerList from "../CustomerList";
 
 const AdminMainPage = () => {
   const ref = useRef(null);
@@ -76,6 +79,15 @@ const AdminMainPage = () => {
     },
   ]);
 
+  const [customerList, setCustomerList] = useState([
+    {
+      id: 1,
+      name: "▶ Customer",
+      isOpen: false,
+      subItems: ["Customer List"],
+    },
+  ]);
+
   const [income, setIncome] = useState([
     {
       id: 1,
@@ -111,8 +123,13 @@ const AdminMainPage = () => {
       )
     );
   };
-
-
+  const toggleCustomer = (itemId) => {
+    setCustomerList((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, isOpen: !item.isOpen } : item
+      )
+    );
+  };
 
   const toggleMember = (itemId) => {
     setMember((prevItems) =>
@@ -152,6 +169,13 @@ const AdminMainPage = () => {
         item.id === itemId ? { ...item, isOpen: !item.isOpen } : item
       )
     );
+  };
+
+  const handleCustomerList = async () => {
+    setNoteView("customerlist");
+    ref.current.classList.add("slider__close");
+    ref.current.classList.remove("slider__open");
+    setSlideOpen(false);
   };
 
   const handleMembershipReq = async () => {
@@ -247,6 +271,19 @@ const AdminMainPage = () => {
 
   const handleWithdrawReport = async () => {
     setNoteView("withdrawReport");
+    ref.current.classList.add("slider__close");
+    ref.current.classList.remove("slider__open");
+    setSlideOpen(false);
+  };
+
+  const handleRefund = async () => {
+    setNoteView("refund");
+    ref.current.classList.add("slider__close");
+    ref.current.classList.remove("slider__open");
+    setSlideOpen(false);
+  };
+  const handleRefundList = async () => {
+    setNoteView("refundlist");
     ref.current.classList.add("slider__close");
     ref.current.classList.remove("slider__open");
     setSlideOpen(false);
@@ -655,6 +692,43 @@ const AdminMainPage = () => {
             </ul>
           </div>
 
+           <div
+            style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
+            className="note__btn"
+          >
+            <ul>
+              {customerList.map((items) => (
+                <li key={items.id}>
+                  <span
+                    onClick={() => toggleCustomer(items.id)}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: 17,
+                      textAlign: "left",
+                    }}
+                    className="note__btn"
+                  >
+                    {items.name}
+                  </span>
+                  {items.isOpen && (
+                    <ul style={{ padding: 10 }}>
+                      
+                      <li
+                        style={{
+                          marginTop: 10,
+                          listStyleType: "disc",
+                          marginLeft: "20px",
+                        }}
+                        onClick={handleCustomerList}
+                      >
+                        Customer List
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div> 
 
           <div
             style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
@@ -696,13 +770,32 @@ const AdminMainPage = () => {
                       >
                         Trading Report
                       </li>
+                      <li
+                        style={{
+                          marginTop: 10,
+                          listStyleType: "disc",
+                          marginLeft: "20px",
+                        }}
+                        onClick={handleRefund}
+                      >
+                        Refund
+                      </li>
+                      <li
+                        style={{
+                          marginTop: 10,
+                          listStyleType: "disc",
+                          marginLeft: "20px",
+                        }}
+                        onClick={handleRefundList}
+                      >
+                        Refund List
+                      </li>
                     </ul>
                   )}
                 </li>
               ))}
             </ul>
           </div>
-
         </div>
         <div
           style={{
@@ -732,6 +825,11 @@ const AdminMainPage = () => {
           {noteView === "tradingReport" ? (
             <TradingReport role={"adminAll"} />
           ) : null}
+          {noteView === "refund" ? <Refund role={"all"} /> : null}
+          {noteView === "refundlist" ? <RefundList role={"all"} /> : null}
+          {noteView === "customerlist" ? <CustomerList role={'admin'} /> : null}
+
+
           {/* {noteView === "MyProfile" ? <MyProfile /> : null}
           {noteView === "MyPassword" ? <MyPassword /> : null}
           {noteView === "KYCUpload" ? <KYCUpload /> : null}

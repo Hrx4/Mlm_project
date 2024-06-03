@@ -3,7 +3,13 @@ const UserModel = require("../Models/userModel");
 
 const LoginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+
   let user = await UserModel.findOne({ userEmail: email });
+  console.log('====================================');
+  console.log(user);
+  console.log('====================================');
+  if(!user) user = await UserModel.findOne({ userId: email });
+
   user.business.sort((a , b)=>{
     return Number(a.businessLevel) - Number(b.businessLevel);
   })

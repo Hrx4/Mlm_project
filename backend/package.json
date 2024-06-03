@@ -16,6 +16,7 @@
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
     "mongoose": "^8.2.4",
+    "node-cron": "^3.0.3",
     "nodemon": "^3.1.0",
     "short-unique-id": "^5.0.3"
   }

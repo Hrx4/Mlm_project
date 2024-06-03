@@ -109,6 +109,7 @@ const MyProfile = () => {
               <input
                 type="number"
                 id="mobile"
+                disabled={userMobile}
                 value={userMobile}
                 onChange={(e) => setUserMobile(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
@@ -135,6 +136,8 @@ const MyProfile = () => {
                 type="text"
                 id="fatherName"
                 value={userFather}
+                disabled={userFather}
+
                 onChange={(e) => setUserFather(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
               />
@@ -146,6 +149,7 @@ const MyProfile = () => {
               <input
                 type="date"
                 id="dob"
+                disabled
                 value={userDob}
                 onChange={(e) => setUserDob(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
@@ -158,18 +162,20 @@ const MyProfile = () => {
               <input
                 type="text"
                 value={userAdhar}
+                disabled
                 onChange={(e) => setUserAdhar(e.target.value)}
                 id="aadhar"
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="gender" className="block font-semibold">
+              <label htmlFor="gender" className="block font-semibold" >
                 Gender*
               </label>
               <select
                 id="gender"
                 value={userGender}
+                disabled={userGender}
                 onChange={(e) => setUserGender(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
               >
@@ -186,6 +192,7 @@ const MyProfile = () => {
               <input
                 type="text"
                 id="country"
+                disabled
                 value={userCountry}
                 onChange={(e) => setUserCountry(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
@@ -198,6 +205,7 @@ const MyProfile = () => {
               <input
                 type="text"
                 id="state"
+                disabled
                 value={userState}
                 onChange={(e) => setUserState(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
@@ -211,6 +219,8 @@ const MyProfile = () => {
                 type="text"
                 id="nomineeName"
                 value={userNominee}
+                disabled={userNominee}
+
                 onChange={(e) => setUserNominee(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
               />
@@ -222,6 +232,8 @@ const MyProfile = () => {
               <input
                 type="text"
                 id="nomineeRelation"
+                disabled={userNomineeRelation}
+
                 value={userNomineeRelation}
                 onChange={(e) => setUserNomineeRelation(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"

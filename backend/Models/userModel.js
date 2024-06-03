@@ -6,20 +6,31 @@ const UserSchema = mongoose.Schema(
       type: String,
       require: true,
       index: true,
+      unique : true
     },
-    business :
-    {
-      type : [],
-      default :[]
+    tradingId: {
+      type: String,
+      default: "",
+    },
+    tradingAmount: {
+      type: Number,
+      default: 0,
+    },
+    tradingPer: {
+      type: Number,
+      default: 0,
+    },
+    business: {
+      type: [],
+      default: [],
     },
     userStatus: {
       type: String,
       default: "Not Active",
     },
-      totalTeam : {
-        type:Number,
-        default : 0
-      
+    totalTeam: {
+      type: Number,
+      default: 0,
     },
     childUsers: {
       type: [],
@@ -49,17 +60,25 @@ const UserSchema = mongoose.Schema(
       type: Number,
       require: true,
     },
-    selfIncome:{
-      type : Number,
-      default : 0
+    selfIncome: {
+      type: Number,
+      default: 0,
     },
-    levelIncome:{
-      type : Number,
-      default : 0
+    selfIncomePer: {
+      type: Number,
+      default: 0,
     },
-    totalIncome:{
-      type : Number,
-      default : 0
+    selfIncomeHalf: {
+      type: Number,
+      default: 0,
+    },
+    levelIncome: {
+      type: Number,
+      default: 0,
+    },
+    totalIncome: {
+      type: Number,
+      default: 0,
     },
     userEmail: {
       type: String,
@@ -146,17 +165,28 @@ const UserSchema = mongoose.Schema(
       type: String,
       default: "",
     },
-    membershipFee : {
-      type : Number,
-      default :0
+    membershipFee: {
+      type: Number,
+      default: 0,
     },
-    membershipPhoto : {
-      type : String,
-      default : ""
+    membershipPhoto: {
+      type: String,
+      default: "",
     },
-    membershipStatus : {
-      type : String,
-      default : "Null"
+    membershipStatus: {
+      type: String,
+      default: "Null",
+    },
+    customerIncome : {
+      type:Number,
+      default : 0
+    },
+    customerList : {
+      type : [],
+      default : []
+    },
+    customer : {
+      type : Boolean
     }
   },
   {

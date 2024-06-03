@@ -24,6 +24,8 @@ import DirectIncome from "../pages/DirectIncome";
 import DematIncome from "../pages/DematIncome";
 import TradingRequest from "../pages/TradingRequest";
 import TradingReport from "../pages/TradingReport";
+import RefundList from "../pages/RefundList";
+import CustomerList from "../pages/CustomerList";
 
 // import SnavBar from './SnavBar';
 
@@ -31,6 +33,7 @@ const MainPage = () => {
   const ref = useRef(null);
   const [noteView, setNoteView] = useState("Dashboard");
   const [slideOpen, setSlideOpen] = useState(false);
+  const [customer , setCustomer] = useState(false)
   const [Dashboard, setDashboard] = useState([
     {
       id: 1,
@@ -54,6 +57,15 @@ const MainPage = () => {
       name: "▶ Member",
       isOpen: false,
       subItems: ["Add Member", "Member List", "Direct Member", "Level View"],
+    },
+  ]);
+
+  const [customerList, setCustomerList] = useState([
+    {
+      id: 1,
+      name: "▶ Customer",
+      isOpen: false,
+      subItems: ["Customer List"],
     },
   ]);
 
@@ -124,6 +136,14 @@ const MainPage = () => {
 
   const toggleMember = (itemId) => {
     setMember((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, isOpen: !item.isOpen } : item
+      )
+    );
+  };
+
+  const toggleCustomer = (itemId) => {
+    setCustomerList((prevItems) =>
       prevItems.map((item) =>
         item.id === itemId ? { ...item, isOpen: !item.isOpen } : item
       )
@@ -247,6 +267,13 @@ const MainPage = () => {
     setSlideOpen(false);
   };
 
+  const handleCustomerList = async () => {
+    setNoteView("customerlist");
+    ref.current.classList.add("slider__close");
+    ref.current.classList.remove("slider__open");
+    setSlideOpen(false);
+  };
+
   const handleDepositReport = async () => {
     setNoteView("DepositReport");
     ref.current.classList.add("slider__close");
@@ -277,6 +304,13 @@ const MainPage = () => {
 
   const handleTradingReport = async () => {
     setNoteView("tradingReport");
+    ref.current.classList.add("slider__close");
+    ref.current.classList.remove("slider__open");
+    setSlideOpen(false);
+  };
+
+  const handleRefund = async () => {
+    setNoteView("refund");
     ref.current.classList.add("slider__close");
     ref.current.classList.remove("slider__open");
     setSlideOpen(false);
@@ -324,6 +358,7 @@ const MainPage = () => {
 
   useEffect(() => {
     handleDashboard();
+    setCustomer(JSON.parse(localStorage.getItem("userInfo"))?.user?.customer)
   }, []);
 
   return (
@@ -495,7 +530,8 @@ const MainPage = () => {
             </ul>
           </div>
 
-          <div
+          {
+            !customer ? <div
             style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
             className="note__btn"
           >
@@ -560,7 +596,9 @@ const MainPage = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> :null
+          }
+
           <div
             style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
             className="note__btn"
@@ -598,7 +636,7 @@ const MainPage = () => {
             </ul>
           </div>
 
-          <div
+          {/* <div
             style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
             className="note__btn"
           >
@@ -633,7 +671,7 @@ const MainPage = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           <div
             style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
@@ -675,12 +713,62 @@ const MainPage = () => {
                       >
                         Trading Report
                       </li>
+                      <li
+                        style={{
+                          marginTop: 10,
+                          listStyleType: "disc",
+                          marginLeft: "20px",
+                        }}
+                        onClick={handleRefund}
+                      >
+                        Refund
+                      </li>
                     </ul>
                   )}
                 </li>
               ))}
             </ul>
           </div>
+
+          {
+            !customer ? <div
+            style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
+            className="note__btn"
+          >
+            <ul>
+              {customerList.map((items) => (
+                <li key={items.id}>
+                  <span
+                    onClick={() => toggleCustomer(items.id)}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: 17,
+                      textAlign: "left",
+                    }}
+                    className="note__btn"
+                  >
+                    {items.name}
+                  </span>
+                  {items.isOpen && (
+                    <ul style={{ padding: 10 }}>
+                      
+                      <li
+                        style={{
+                          marginTop: 10,
+                          listStyleType: "disc",
+                          marginLeft: "20px",
+                        }}
+                        onClick={handleCustomerList}
+                      >
+                        Customer List
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div> :null
+          }
 
           <div
             style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
@@ -760,6 +848,10 @@ const MainPage = () => {
           {noteView === "dematIncome" ? <DematIncome /> : null}
           {noteView === "tradingRequest" ? <TradingRequest /> : null}
           {noteView === "tradingReport" ? <TradingReport /> : null}
+          {noteView === "refund" ? <RefundList /> : null}
+          {noteView === "customerlist" ? <CustomerList /> : null}
+
+
 
         </div>
       </div>

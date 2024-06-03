@@ -28,6 +28,9 @@ const depositeModel = mongoose.Schema(
       },
       introducerCode:{
         type:String
+      },
+      customer : {
+        type : Boolean
       }
 
     

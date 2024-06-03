@@ -35,10 +35,10 @@ const SignIn = () => {
       <form onSubmit={handleSignIn}>
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-600">
-            Email
+            Email Or UserID
           </label>
           <input
-            type="email"
+            type="text"
             id="email"
             className="mt-1 p-2 w-full border rounded-md"
             value={email}

@@ -14,14 +14,20 @@ const createUser = asyncHandler(async (req, res) => {
     userCountry,
     userState,
     userPassword,
+    userId,
+    userAdhar,
+    userDob,
+    bankPan,
+    customer
   } = req.body;
 
   try {
     const createList = await idList.create({
       userName,
-      userId: "",
+      userId: userId,
       introducerCode: introducerCode,
       userEmail: userEmail,
+      customer
     });
   } catch (error) {
     console.log("====================================");
@@ -29,8 +35,11 @@ const createUser = asyncHandler(async (req, res) => {
     console.log("====================================");
     throw new Error(`Error : ${error.message}`);
   }
+
+  if(await UserModel.findOne(userEmail)) throw new Error("Change the email")
+
   const user = await UserModel.create({
-    userId: "",
+    userId: userId,
     introducerCode,
     introducerName,
     userName,
@@ -39,6 +48,10 @@ const createUser = asyncHandler(async (req, res) => {
     userCountry,
     userState,
     userPassword,
+    userAdhar,
+    userDob,
+    bankPan,
+    customer
   });
   res.status(200).json(user);
 });
@@ -63,6 +76,11 @@ const getAllUser = asyncHandler(async (req, res) => {
     return user[0];
   });
   res.status(200).json(await Promise.all(list));
+});
+
+const getAllUserNo = asyncHandler(async (req, res) => {
+    let user = await UserModel.find();
+  res.status(200).json(user);
 });
 
 // const deleteApply = asyncHandler(async (req, res) => {
@@ -190,35 +208,64 @@ const updateUser = asyncHandler(async (req, res) => {
     bankPan,
   } = req.body;
 
-  const user = await UserModel.findOneAndUpdate({userEmail} , {
-    userName,
-    userMobile,
-    userEmail,
-    userPassword,
-    userCountry,
-    userState,
-    userFather,
-    userDob,
-    userAdhar,
-    userGender,
-    userNominee,
-    userNomineeRelation,
-    bankIfsc,
-    bankName,
-    bankBranch,
-    bankAccountNo,
-    bankHolderName,
-    bankAccountType,
-    bankPan,
-  })
+  const user = await UserModel.findOneAndUpdate(
+    { userEmail },
+    {
+      userName,
+      userMobile,
+      userEmail,
+      userPassword,
+      userCountry,
+      userState,
+      userFather,
+      userDob,
+      userAdhar,
+      userGender,
+      userNominee,
+      userNomineeRelation,
+      bankIfsc,
+      bankName,
+      bankBranch,
+      bankAccountNo,
+      bankHolderName,
+      bankAccountType,
+      bankPan,
+    }
+  );
 
   res.status(201).json(user);
-
 });
 
-const adminUserList = asyncHandler(async(req , res)=>{
+const adminUserList = asyncHandler(async (req, res) => {
   const list = await UserModel.find();
-  res.status(200).json(list)
+  res.status(200).json(list);
+});
+
+const selfIncomeIncraement = asyncHandler(async (req, res) => {
+  let list = await UserModel.find();
+
+  // const month = new Date().getDate()
+ 
+  for(let item of list){
+    item.selfIncomePer += parseInt((item.selfIncome + item.selfIncomePer)*0.05) + parseInt((item.selfIncomeHalf)*0.025) 
+    item.selfIncome += item.selfIncomeHalf
+    item.selfIncomeHalf =0
+    console.log('====================================');
+    console.log(item);
+    console.log('====================================');
+    await item.save()
+
+  }
+  // await list.save()
+  //  res.status(200).json(list);
+});
+
+const getCustomerList = asyncHandler(async(req , res)=>{
+
+  const {userId} = req.body;
+  const userList = await UserModel.findOne({userId})
+  res.status(200).json(userList)
+
 })
 
 module.exports = {
@@ -230,5 +277,8 @@ module.exports = {
   getAllUser,
   updatePassword,
   updateUser,
-  adminUserList
+  adminUserList,
+  getAllUserNo,
+  selfIncomeIncraement,
+  getCustomerList
 };

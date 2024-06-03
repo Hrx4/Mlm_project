@@ -86,6 +86,11 @@ const KYCUpload = () => {
           ?.userEmail,
       });
       console.log(response.data);
+      setKycAdharBack(response.data[0].kycAdharBack)
+      setKycAdharFront(response.data[0].kycAdharFront)
+      setKycBank(response.data[0].kycBank)
+      setKycPan(response.data[0].kycPan)
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -123,6 +128,7 @@ const KYCUpload = () => {
                   accept="image/*"
                   onChange={uploadFiles}
                   id="pan"
+                  disabled={kycPan}
                   className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                   required
                 />
@@ -134,6 +140,8 @@ const KYCUpload = () => {
                 <input
                   ref={ref1}
                   type="file"
+                  disabled={kycAdharFront}
+
                   accept="image/*"
                   onChange={uploadFiles}
                   on
@@ -150,6 +158,8 @@ const KYCUpload = () => {
                 <input
                   ref={ref2}
                   type="file"
+                  disabled={kycAdharBack}
+
                   accept="image/*"
                   onChange={uploadFiles}
                   id="adharb"
@@ -165,6 +175,8 @@ const KYCUpload = () => {
                   ref={ref3}
                   type="file"
                   accept="image/*"
+                  disabled={kycBank}
+
                   onChange={uploadFiles}
                   id="bank"
                   className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"

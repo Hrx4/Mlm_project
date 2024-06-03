@@ -7,15 +7,13 @@ const MainDashboard = () => {
   const [userInfo, setuserInfo] = useState({});
   const [totalTeam, setTotalTeam] = useState(0);
 
-
   useEffect(() => {
     setuserInfo(JSON.parse(localStorage.getItem("userInfo"))?.user);
     setTotalTeam(JSON.parse(localStorage.getItem("userInfo"))?.totalTeam);
-
   }, []);
 
   return (
-    <div className="dashboardpage">
+    <div className=" mx-auto">
       <div style={{ marginBottom: "50px" }}>
         <IconContext.Provider value={{ className: "text-4xl" }}>
           <div className="flex flex-wrap justify-center items-center h-screen">
@@ -24,24 +22,42 @@ const MainDashboard = () => {
               title={userInfo?.userName}
               subtitle={`ID : ${userInfo?.userId}`}
             />
-            <Card icon={<RiTeamLine />} title="My Direct" subtitle={userInfo?.childUsers?.length} />
-            <Card icon={<MdPeople />} title="My Team" subtitle={totalTeam}/>
-            <Card
-              icon={<MdAttachMoney />}
-              title="Level Income"
-              subtitle={`₹${userInfo?.levelIncome}`}
-              
-            />
+            {!userInfo?.customer ? (
+              <>
+                <Card
+                  icon={<RiTeamLine />}
+                  title="My Direct"
+                  subtitle={userInfo?.childUsers?.length}
+                />
+                <Card
+                  icon={<MdPeople />}
+                  title="My Team"
+                  subtitle={totalTeam}
+                />
+                <Card
+                  icon={<MdAttachMoney />}
+                  title="Level Income"
+                  subtitle={`₹${userInfo?.levelIncome}`}
+                />
+              </>
+            ) : null}
             <Card
               icon={<MdAttachMoney />}
               title="Self Income"
-              subtitle={`₹${userInfo?.selfIncome}`}
+              subtitle={`₹${userInfo?.selfIncomePer}`}
             />
             <Card
               icon={<MdAttachMoney />}
-              title="Demat Income"
-              subtitle="₹0"
+              title="Trading Income"
+              subtitle={`₹${userInfo?.tradingPer}`}
             />
+            {!userInfo?.customer ? (
+              <Card
+                icon={<MdAttachMoney />}
+                title="Customer Income"
+                subtitle={`₹${userInfo?.customerIncome}`}
+              />
+            ) : null}
             <Card
               icon={<MdAttachMoney />}
               title="Total Income"
@@ -55,7 +71,7 @@ const MainDashboard = () => {
           </div>
         </IconContext.Provider>
       </div>
-      <div
+      {/* <div
         className="mt-30 h-25 bg-gradient-to-r from-gray-400 to-gray-100 referrallink"
         style={{ height: "100px" }}
       >
@@ -100,14 +116,14 @@ const MainDashboard = () => {
             ></img>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
 
 const Card = ({ icon, title, subtitle }) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 m-4 max-w-xs w-full relative bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
+    <div className="bg-white rounded-lg  p-6 m-4 max-w-xs w-full relative  shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
       <div className="flex items-start mb-4">{icon}</div>
       <h2 className="text-xl font-semibold mb-2">{title}</h2>
       <p className="text-gray-500">{subtitle}</p>

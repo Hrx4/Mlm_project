@@ -26,6 +26,9 @@ const idList = mongoose.Schema(
     membershipStatus :{
       type :String,
       default : "pending"
+    },
+    customer : {
+      type : Boolean
     }
 
     

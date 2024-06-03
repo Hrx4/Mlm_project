@@ -86,6 +86,8 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="name"
+                disabled={bankIfsc}
+
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
               />
@@ -101,6 +103,8 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="mobile"
+                disabled={bankName}
+
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
               />
@@ -117,6 +121,8 @@ const MyBank = () => {
                 }}
                 type="email"
                 id="email"
+                disabled={bankBranch}
+
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
               />
@@ -133,6 +139,8 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="fatherName"
+                disabled={bankAccountNo}
+
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
               />
@@ -149,6 +157,7 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="dob"
+
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
               />
@@ -165,6 +174,8 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="aadhar"
+                disabled={bankHolderName}
+
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
               />
@@ -181,6 +192,7 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="aadhar"
+                disabled={bankAccountType}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
               />
@@ -197,6 +209,7 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="country"
+                disabled
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
               />

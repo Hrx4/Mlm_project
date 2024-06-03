@@ -53,7 +53,8 @@ const INRDeposit = () =>{
     depositeMode : depositeMode,
     userEmail :JSON.parse(localStorage.getItem("userInfo")).user.userEmail,
     introducerCode : JSON.parse(localStorage.getItem("userInfo")).user.introducerCode,
-    userId :JSON.parse(localStorage.getItem("userInfo")).user.userId
+    userId :JSON.parse(localStorage.getItem("userInfo")).user.userId,
+    customer : JSON.parse(localStorage.getItem("userInfo")).user.customer
         });
         setDepositeFee(0)
         setDepositeMode("")

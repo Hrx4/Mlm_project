@@ -24,12 +24,14 @@ const TradingReport = ({role}) => {
       }
       , []);
 
-      const handleAccept = async(id)=>{
+      const handleAccept = async(id , tradid , tradAmount)=>{
     try {
       const response = await axios.put(
         `${backend}/trading/accept/`,
         {
-            rowId : id
+            rowId : id,
+            tradId : tradid,
+            tradAmount : tradAmount
         }
       );
       console.log(response.data);
@@ -92,7 +94,7 @@ const TradingReport = ({role}) => {
                                         <td className="border px-4 py-2"> {item.tradingStatus} </td>
                                     ):
                                     (
-                                        <td className="border px-4 py-2"> <button className=" p-2 bg-blue-400 rounded-xl" onClick={()=>handleAccept(item._id)} >Accept</button> </td>
+                                        <td className="border px-4 py-2"> <button className=" p-2 bg-blue-400 rounded-xl" onClick={()=>handleAccept(item._id , item.tradingId ,item?.tradingAmount )} >Accept</button> </td>
                                     )
                                 }
 
