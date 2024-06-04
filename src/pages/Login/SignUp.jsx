@@ -16,6 +16,8 @@ const SignUp = () => {
   const [bankPan, setBankPan] = useState("");
   const [userId, setUserId] = useState("");
   const [userNo, setUserNo] = useState(0);
+  const [customer, setCustomer] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -35,7 +37,8 @@ const SignUp = () => {
     userAdhar,
     userDob,
     bankPan,
-    userId 
+    userId ,
+    customer
         });
         console.log('====================================');
         console.log(response);
@@ -254,6 +257,25 @@ useEffect(() => {
             required
           />
         </div>
+
+        <div className="mb-4">
+              <label
+                htmlFor="bankPan"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Customer*
+              </label>
+              <select
+                name="customer"
+                id="customer"
+                className="mt-1 p-2 w-full border rounded-md"
+                value={customer}
+                onChange={(e)=>setCustomer(e.target.value)}
+              >
+                <option value="false">false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
 
         {/* Add similar input fields for other form fields with respective useState and onChange handlers */}
 

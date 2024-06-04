@@ -21,6 +21,12 @@ const createUser = asyncHandler(async (req, res) => {
     customer
   } = req.body;
 
+  const currentUser = await UserModel.findOne({userEmail :userEmail})
+  const intCheck = await UserModel.findOne({userId : introducerCode})
+  if(currentUser) throw new Error("Change the email")
+    if(introducerCode!=="" && intCheck.userStatus === 'Active')
+
+ {
   try {
     const createList = await idList.create({
       userName,
@@ -36,7 +42,6 @@ const createUser = asyncHandler(async (req, res) => {
     throw new Error(`Error : ${error.message}`);
   }
 
-  if(await UserModel.findOne(userEmail)) throw new Error("Change the email")
 
   const user = await UserModel.create({
     userId: userId,
@@ -53,7 +58,10 @@ const createUser = asyncHandler(async (req, res) => {
     bankPan,
     customer
   });
-  res.status(200).json(user);
+  return res.status(200).json(user);
+ }
+ else throw new Error("Introducer not active")
+
 });
 
 const getUser = asyncHandler(async (req, res) => {

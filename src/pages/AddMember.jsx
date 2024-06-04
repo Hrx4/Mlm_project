@@ -17,7 +17,7 @@ const AddMember = () => {
   const [bankPan, setBankPan] = useState("");
   const [userId, setUserId] = useState("");
   const [userNo, setUserNo] = useState(0);
-  const [customer, setCustomer] = useState(false);
+  const [customer, setCustomer] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
