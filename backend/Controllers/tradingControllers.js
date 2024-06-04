@@ -6,6 +6,8 @@ const refundModel = require("../Models/refundModel");
 const createTrading = asyncHandler(async (req, res) => {
   const { tradingAmount, tradingPhoto, tradingId, userId } = req.body;
 
+  const currentUser = await userModel.findOne({ userId: userId });
+  if (currentUser.userStatus !== "Active") return res.status(400).json({message : "Take membership first"});
   //   const currentUser = await userModel.findOne({ userId });
   //   if (parseInt(amount) > currentUser.totalIncome)
   //     return res.status(402).json({ message: "Withdraw valid amount" });

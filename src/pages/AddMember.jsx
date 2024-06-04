@@ -56,6 +56,8 @@ const AddMember = () => {
       console.log("====================================");
     } catch (error) {
       console.error("Error fetching data:", error);
+      if(error.response.status ===400) alert(error.response.data.message)
+        else alert("Error occured")
     }
   };
 

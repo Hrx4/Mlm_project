@@ -18,22 +18,22 @@ const createUser = asyncHandler(async (req, res) => {
     userAdhar,
     userDob,
     bankPan,
-    customer
+    customer,
   } = req.body;
 
-  const currentUser = await UserModel.findOne({userEmail :userEmail})
-  const intCheck = await UserModel.findOne({userId : introducerCode})
-  if(currentUser) throw new Error("Change the email")
-    if(introducerCode!=="" && intCheck.userStatus === 'Active')
-
- {
+  const currentUser = await UserModel.findOne({ userEmail: userEmail });
+  const intCheck = await UserModel.findOne({ userId: introducerCode });
+  if (currentUser) throw new Error("Change the email");
+  if (introducerCode !== "" && intCheck.userStatus !== "Active") {
+    return res.status(400).json({message : "Introducer not active"})
+  }
   try {
     const createList = await idList.create({
       userName,
       userId: userId,
       introducerCode: introducerCode,
       userEmail: userEmail,
-      customer
+      customer,
     });
   } catch (error) {
     console.log("====================================");
@@ -41,7 +41,6 @@ const createUser = asyncHandler(async (req, res) => {
     console.log("====================================");
     throw new Error(`Error : ${error.message}`);
   }
-
 
   const user = await UserModel.create({
     userId: userId,
@@ -56,12 +55,9 @@ const createUser = asyncHandler(async (req, res) => {
     userAdhar,
     userDob,
     bankPan,
-    customer
+    customer,
   });
   return res.status(200).json(user);
- }
- else throw new Error("Introducer not active")
-
 });
 
 const getUser = asyncHandler(async (req, res) => {
@@ -87,7 +83,7 @@ const getAllUser = asyncHandler(async (req, res) => {
 });
 
 const getAllUserNo = asyncHandler(async (req, res) => {
-    let user = await UserModel.find();
+  let user = await UserModel.find();
   res.status(200).json(user);
 });
 
@@ -253,28 +249,27 @@ const selfIncomeIncraement = asyncHandler(async (req, res) => {
   let list = await UserModel.find();
 
   // const month = new Date().getDate()
- 
-  for(let item of list){
-    item.selfIncomePer += parseInt((item.selfIncome + item.selfIncomePer)*0.05) + parseInt((item.selfIncomeHalf)*0.025) 
-    item.selfIncome += item.selfIncomeHalf
-    item.selfIncomeHalf =0
-    console.log('====================================');
-    console.log(item);
-    console.log('====================================');
-    await item.save()
 
+  for (let item of list) {
+    item.selfIncomePer +=
+      parseInt((item.selfIncome + item.selfIncomePer) * 0.05) +
+      parseInt(item.selfIncomeHalf * 0.025);
+    item.selfIncome += item.selfIncomeHalf;
+    item.selfIncomeHalf = 0;
+    console.log("====================================");
+    console.log(item);
+    console.log("====================================");
+    await item.save();
   }
   // await list.save()
   //  res.status(200).json(list);
 });
 
-const getCustomerList = asyncHandler(async(req , res)=>{
-
-  const {userId} = req.body;
-  const userList = await UserModel.findOne({userId})
-  res.status(200).json(userList)
-
-})
+const getCustomerList = asyncHandler(async (req, res) => {
+  const { userId } = req.body;
+  const userList = await UserModel.findOne({ userId });
+  res.status(200).json(userList);
+});
 
 module.exports = {
   createUser,
@@ -288,5 +283,5 @@ module.exports = {
   adminUserList,
   getAllUserNo,
   selfIncomeIncraement,
-  getCustomerList
+  getCustomerList,
 };

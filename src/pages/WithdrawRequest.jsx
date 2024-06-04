@@ -20,6 +20,10 @@ const WithdrawRequest = () =>{
       setAmount(0)
       
     } catch (error) {
+      if(error.response.status===402) alert(error.response.data.message)
+        else if(error.response.status===403) alert(error.response.data.message)
+      else alert('Error Occured')
+
       console.error("Error fetching data:", error);
     }
   }
@@ -58,7 +62,7 @@ const WithdrawRequest = () =>{
         </div>
         <div className="flex">
           <div className="flex-1 bg-green-300 hover:bg-green-700 p-4 rounded-lg mr-2">
-            <p>Total BALANCE: {userInfo?.totalIncome} </p>
+            <p>Total BALANCE: {userInfo?.customerIncome + userInfo?.selfIncomePer + userInfo?.tradingPer + userInfo?.levelIncome} </p>
           </div>
           
         </div>

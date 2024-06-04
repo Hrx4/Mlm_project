@@ -64,6 +64,8 @@ const INRDeposit = () =>{
         console.log(response);
         console.log('====================================');
       } catch (error) {
+       if(error.response.status ===400) alert(error.response.data.message)
+        else alert("Error occured")
         console.error('Error fetching data:', error);
       }
     }

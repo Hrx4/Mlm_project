@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { FiUser } from "react-icons/fi";
 import backend from "../backend";
 const MyProfile = () => {
+  const [userInfo , setUserInfo] = useState({})
   const [userName, setUserName] = useState("");
   const [userMobile, setUserMobile] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -54,6 +55,7 @@ const MyProfile = () => {
         userEmail: JSON.parse(localStorage.getItem("userInfo"))?.user?.userEmail,
       });
       console.log(response.data);
+      setUserInfo(response.data[0])
       setUserName(response.data[0]?.userName);
       setUserMobile(response.data[0]?.userMobile);
       setUserEmail(response.data[0]?.userEmail);
@@ -109,7 +111,7 @@ const MyProfile = () => {
               <input
                 type="number"
                 id="mobile"
-                disabled={userMobile}
+                disabled={userInfo?.userMobile}
                 value={userMobile}
                 onChange={(e) => setUserMobile(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
@@ -122,7 +124,7 @@ const MyProfile = () => {
               <input
                 type="email"
                 id="email"
-                value={userEmail}
+                value={userInfo?.userEmail}
                 disabled
                 onChange={(e) => setUserEmail(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
@@ -136,7 +138,7 @@ const MyProfile = () => {
                 type="text"
                 id="fatherName"
                 value={userFather}
-                disabled={userFather}
+                disabled={userInfo?.userFather}
 
                 onChange={(e) => setUserFather(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
@@ -175,7 +177,7 @@ const MyProfile = () => {
               <select
                 id="gender"
                 value={userGender}
-                disabled={userGender}
+                disabled={userInfo?.userGender}
                 onChange={(e) => setUserGender(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
               >
@@ -219,7 +221,7 @@ const MyProfile = () => {
                 type="text"
                 id="nomineeName"
                 value={userNominee}
-                disabled={userNominee}
+                disabled={userInfo?.userNominee}
 
                 onChange={(e) => setUserNominee(e.target.value)}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
@@ -232,7 +234,7 @@ const MyProfile = () => {
               <input
                 type="text"
                 id="nomineeRelation"
-                disabled={userNomineeRelation}
+                disabled={userInfo?.userNomineeRelation}
 
                 value={userNomineeRelation}
                 onChange={(e) => setUserNomineeRelation(e.target.value)}

@@ -17,6 +17,10 @@ const createDeposite = asyncHandler(async (req, res) => {
     customer
   } = req.body;
 
+  
+  const currentUser = await UserModel.findOne({ userEmail: userEmail });
+  if (currentUser.userStatus !== "Active") return res.status(400).json({message : "Take membership first"})
+
   const deposite = await depositeModel.create({
     depositeAmount,
     depositePhoto,
@@ -41,7 +45,7 @@ const acceptDeposite = asyncHandler(async (req, res) => {
   const { depositeAmount, userEmail, introducerCode, userId, acceptId , customer} =
     req.body;
   const currentUser = await UserModel.findOne({ userEmail: userEmail });
-  if (currentUser.selfIncome === 0) throw new Error("Take membership first");
+  if (currentUser.userStatus !== "Active") throw new Error("Take membership first");
   let parentChild = currentUser.levelParent;
   const businessName = currentUser.userName;
 

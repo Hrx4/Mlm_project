@@ -11,6 +11,8 @@ const KYCUpload = () => {
   const [kycAdharBack, setKycAdharBack] = useState("");
   const [kycBank, setKycBank] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userInfo , setUserInfo] = useState({})
+
 
   const ref = useRef();
   const ref1 = useRef();
@@ -90,6 +92,8 @@ const KYCUpload = () => {
       setKycAdharFront(response.data[0].kycAdharFront)
       setKycBank(response.data[0].kycBank)
       setKycPan(response.data[0].kycPan)
+      setUserInfo(response.data[0])
+
 
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -128,7 +132,7 @@ const KYCUpload = () => {
                   accept="image/*"
                   onChange={uploadFiles}
                   id="pan"
-                  disabled={kycPan}
+                  disabled={userInfo?.kycPan}
                   className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                   required
                 />
@@ -140,7 +144,7 @@ const KYCUpload = () => {
                 <input
                   ref={ref1}
                   type="file"
-                  disabled={kycAdharFront}
+                  disabled={userInfo?.kycAdharFront}
 
                   accept="image/*"
                   onChange={uploadFiles}
@@ -158,7 +162,7 @@ const KYCUpload = () => {
                 <input
                   ref={ref2}
                   type="file"
-                  disabled={kycAdharBack}
+                  disabled={userInfo?.kycAdharBack}
 
                   accept="image/*"
                   onChange={uploadFiles}
@@ -175,7 +179,7 @@ const KYCUpload = () => {
                   ref={ref3}
                   type="file"
                   accept="image/*"
-                  disabled={kycBank}
+                  disabled={userInfo?.kycBank}
 
                   onChange={uploadFiles}
                   id="bank"

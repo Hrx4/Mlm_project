@@ -7,8 +7,9 @@ import axios from "axios";
 
 const TradingRequest = () => {
   const [paymentPhoto, setPaymentPhoto] = useState("");
-  const [tradingId, setTradingId] = useState("");
+  const [tradingId, setTradingId] = useState(JSON.parse(localStorage.getItem("userInfo"))?.user?.tradingId);
   const [amount, setAmount] = useState(0);
+  // const [check, setCheck] = useState(JSON.parse(localStorage.getItem("userInfo"))?.user?.tradingId)
 
   const [loading, setLoading] = useState(false);
 
@@ -42,25 +43,25 @@ const TradingRequest = () => {
     setLoading(false);
   };
 
-
-  const handleCreate = async(e)=>{
-    e.preventDefault()
+  const handleCreate = async (e) => {
+    e.preventDefault();
     try {
       const response = await axios.post(`${backend}/trading/`, {
-        userId : JSON.parse(localStorage.getItem("userInfo"))?.user?.userId,
-        tradingAmount :amount , tradingPhoto : paymentPhoto, tradingId : tradingId
+        userId: JSON.parse(localStorage.getItem("userInfo"))?.user?.userId,
+        tradingAmount: amount,
+        tradingPhoto: paymentPhoto,
+        tradingId: tradingId,
       });
       console.log(response.data);
-      setAmount(0)
+      setAmount(0);
       ref3.current.value = "";
-      setTradingId('')
-      
+      setTradingId("");
     } catch (error) {
+      if(error.response.status ===400) alert(error.response.data.message)
+        else alert("Error occured")
       console.error("Error fetching data:", error);
     }
-  }
-
-
+  };
 
   return (
     <>
@@ -78,9 +79,7 @@ const TradingRequest = () => {
             <GrDocumentUpload className="text-2xl mr-2" />
             <h1 className="text-xl font-bold">Trading Request</h1>
           </div>
-          <form
-            onSubmit={handleCreate}
-          >
+          <form onSubmit={handleCreate}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="mb-4">
                 <label htmlFor="name" className="block font-semibold">
@@ -90,6 +89,7 @@ const TradingRequest = () => {
                   type="text"
                   id="tradingid"
                   required
+                  disabled={JSON.parse(localStorage.getItem("userInfo"))?.user?.tradingId}
                   value={tradingId}
                   onChange={(e) => {
                     setTradingId(e.target.value);

@@ -12,6 +12,8 @@ const MyBank = () => {
   const [bankHolderName, setBankHolderName] = useState("");
   const [bankAccountType, setBankAccountType] = useState("");
   const [bankPan, setBankPan] = useState("");
+  const [userInfo , setUserInfo] = useState({})
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,6 +52,7 @@ const MyBank = () => {
           ?.userEmail,
       });
       console.log(response.data);
+      setUserInfo(response.data[0])
       setBankIfsc(response.data[0]?.bankIfsc);
       setBankName(response.data[0]?.bankName);
       setBankBranch(response.data[0]?.bankBranch);
@@ -86,7 +89,7 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="name"
-                disabled={bankIfsc}
+                disabled={userInfo?.bankIfsc}
 
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
@@ -103,7 +106,7 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="mobile"
-                disabled={bankName}
+                disabled={userInfo?.bankName}
 
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
@@ -119,9 +122,9 @@ const MyBank = () => {
                   setBankBranch(e.target.value);
                   console.log(e.target.value);
                 }}
-                type="email"
+                type="text"
                 id="email"
-                disabled={bankBranch}
+                disabled={userInfo?.bankBranch}
 
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
@@ -139,7 +142,7 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="fatherName"
-                disabled={bankAccountNo}
+                disabled={userInfo?.bankAccountNo}
 
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
@@ -174,7 +177,7 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="aadhar"
-                disabled={bankHolderName}
+                disabled={userInfo?.bankHolderName}
 
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
@@ -192,7 +195,7 @@ const MyBank = () => {
                 }}
                 type="text"
                 id="aadhar"
-                disabled={bankAccountType}
+                disabled={userInfo?.bankAccountType}
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
               />
