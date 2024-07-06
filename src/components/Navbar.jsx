@@ -3,10 +3,14 @@ import { Dialog, Transition } from "@headlessui/react";
 import { RxCross2 } from "react-icons/rx";
 import { FaCircleUser } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [userInfo, setuserInfo] = useState({});
+
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     setuserInfo(JSON.parse(localStorage.getItem("userInfo")));
@@ -37,14 +41,7 @@ export default function Navbar() {
                   </div>
                   {open ? (
                     <div className="w-48 bg-blue-200 absolute right-0 mr-8">
-                      <div className="p-4 cursor-pointer hover:bg-sky-700">
-                        Edit Profile
-                      </div>
-                      <div className="p-4 cursor-pointer hover:bg-sky-700">
-                        Change Password
-                      </div>
-                      <div className=" h-px bg-black"></div>
-                      <div className="flex items-center p-4 cursor-pointer hover:bg-sky-700">
+                      <div className="flex items-center p-4 cursor-pointer hover:bg-sky-700" onClick={()=>navigate(-1)} >
                         <MdLogout />
                         Log Out
                       </div>

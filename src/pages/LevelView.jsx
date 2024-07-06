@@ -67,21 +67,38 @@ const LevelView = ({ check }) => {
     );
   }
 
-  const handleUser = async(e)=>{
-    e.preventDefault()
+  const handleUser = async (e) => {
+    e.preventDefault();
     try {
       const response = await axios.post(`${backend}/user/detail`, {
-        userId : userCode,
+        userId:
+          check === "admin"
+            ? userCode
+            : JSON.parse(localStorage.getItem(userInfo).user.userId),
       });
       console.log(response.data);
       setCurrentUser(response.data[0]);
-      
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleUserSide = async()=>{
+    try {
+      const response = await axios.post(`${backend}/user/detail`, {
+        userId:JSON.parse(localStorage.getItem('userInfo'))?.user?.userId,
+      });
+      console.log(response.data);
+      setCurrentUser(response.data[0]);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    check !== "admin" ? 
+    handleUserSide() : null
+  }, []);
 
   return (
     <>
@@ -97,7 +114,13 @@ const LevelView = ({ check }) => {
               value={userCode}
               onChange={(e) => setUserCode(e.target.value)}
             />
-            <button className=" p-2 bg-green-400 rounded-xl ml-2"  onClick={handleUser}> Submit </button>
+            <button
+              className=" p-2 bg-green-400 rounded-xl ml-2"
+              onClick={handleUser}
+            >
+              {" "}
+              Submit{" "}
+            </button>
           </div>
         ) : null}
         <div className="flex items-center mb-4">
