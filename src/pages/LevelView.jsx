@@ -34,13 +34,12 @@ const LevelView = ({ check }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  let businessLength = currentUser?.childUsers?.length;
-  if (businessLength > 4) businessLength = 4;
-  for (let i = 1; i <= 9; i++) {
+  let businessLength = business.length ===0?0 : 9;
+  for (let i = 1; i <= businessLength; i++) {
     let amount = 0;
     let member = 0;
     let business = currentUser?.business;
-    business.map((item, index) => {
+    business?.map((item, index) => {
       if (item?.businessLevel === i) {
         amount += parseFloat(item?.businessMoney);
         member++;
@@ -195,7 +194,7 @@ const LevelView = ({ check }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {business.map((item, index) => (
+                  {business?.map((item, index) => (
                     <TableRow key={index}>
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{item.businessId}</TableCell>
