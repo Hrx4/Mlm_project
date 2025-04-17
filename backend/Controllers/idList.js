@@ -17,9 +17,9 @@ const acceptUser = asyncHandler(async (req, res) => {
       const parentUser = await UserModel.findOne({ userId: introducerCode });
       parentUser.customerList.push({
         userId : userId,
-        amount : membershipFee * 0.025
+        amount : membershipFee * 0.015
       }) 
-      parentUser.customerIncome += parseInt(membershipFee * 0.025)
+      parentUser.customerIncome += parseInt(membershipFee * 0.015)
 
       await parentUser.save()
 
