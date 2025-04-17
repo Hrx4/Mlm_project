@@ -2,8 +2,7 @@ const asyncHandler = require("express-async-handler");
 const idList = require("../Models/idList");
 const UserModel = require("../Models/userModel");
 const data = [
-  0.025, 0.0125, 0.005, 0.003, 0.0025, 0.0025, 0.0025, 0.0025, 0.002, 0.0015,
-  0.0015, 0.0015, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001,
+  0.015, 0.01, 0.005, 0.003, 0.002,0.002, 0.001, 0.001, 0.001
 ];
 
 const acceptUser = asyncHandler(async (req, res) => {
@@ -39,10 +38,6 @@ const acceptUser = asyncHandler(async (req, res) => {
         parentChild = [introducerCode];
       }
 
-      console.log("====================================");
-      console.log(parentUser.levelIncome, parseFloat(data[0]), 9384);
-      console.log("====================================");
-
       parentUser.levelIncome += membershipFee * data[0];
       parentUser.business.push({
         businessId: userId,
@@ -50,6 +45,7 @@ const acceptUser = asyncHandler(async (req, res) => {
         businessMoney: membershipFee * data[0],
         businessLevel: 1,
       });
+      parentChild = parentChild.slice(-9)
 
       const parentSize = parentChild.length;
 
@@ -57,15 +53,6 @@ const acceptUser = asyncHandler(async (req, res) => {
         let currentParent = await UserModel.findOne({
           userId: parentChild[parentSize - i - 1],
         });
-        console.log("====================================");
-        console.log("current : ", currentParent);
-        console.log("====================================");
-        let currentParentChildern = currentParent.childUsers.length;
-        let maxiLevel = currentParentChildern * 5;
-        if (currentParentChildern >= 4) maxiLevel = 20;
-        if (maxiLevel <= i) {
-          continue;
-        }
         currentParent.levelIncome += membershipFee * data[i];
         currentParent.business.push({
           businessId: userId,
