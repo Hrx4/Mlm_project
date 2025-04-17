@@ -36,7 +36,7 @@ const LevelView = ({ check }) => {
   };
   let businessLength = currentUser?.childUsers?.length;
   if (businessLength > 4) businessLength = 4;
-  for (let i = 1; i <= businessLength * 5; i++) {
+  for (let i = 1; i <= 9; i++) {
     let amount = 0;
     let member = 0;
     let business = currentUser?.business;

@@ -1,10 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const UserModel = require("../Models/userModel");
 const depositeModel = require("../Models/depositeModel");
-const data = [
-  0.025, 0.0125, 0.005, 0.003, 0.0025, 0.0025, 0.0025, 0.0025, 0.002, 0.0015,
-  0.0015, 0.0015, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001,
-];
+const data = [  0.015, 0.01, 0.005, 0.003, 0.002,0.002, 0.001, 0.001, 0.001];
 
 const createDeposite = asyncHandler(async (req, res) => {
   const {
@@ -90,18 +87,14 @@ const acceptDeposite = asyncHandler(async (req, res) => {
         };
       }
 
+      parentChild = parentChild.slice(-9)
+
       const parentSize = parentChild.length;
 
       for (let i = 1; i < parentSize; i++) {
         let currentParent = await UserModel.findOne({
           userId: parentChild[parentSize - i - 1],
         });
-        let currentParentChildern = currentParent.childUsers.length;
-        let maxiLevel = currentParentChildern * 5;
-        if (currentParentChildern >= 4) maxiLevel = 20;
-        if (maxiLevel <= i) {
-          continue;
-        }
         currentParent.levelIncome += depositeAmount * data[i];
         let curInd = 0;
         if (
