@@ -55,11 +55,11 @@ const acceptDeposite = asyncHandler(async (req, res) => {
     if(customer && introducerCode !== "") {
 
       const parentUser = await UserModel.findOne({ userId: introducerCode });
-      parentUser.customerIncome += parseInt(depositeAmount * 0.025)
+      parentUser.customerIncome += parseInt(depositeAmount * 0.015)
       const ind = parentUser.customerList.findIndex((item)=>item.userId===userId)
       parentUser.customerList[ind] = {
         userId : parentUser.customerList[ind].userId,
-        amount : parentUser.customerList[ind].amount +  (depositeAmount * 0.025)
+        amount : parentUser.customerList[ind].amount +  (depositeAmount * 0.015)
       }
         
       await parentUser.save()

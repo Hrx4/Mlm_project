@@ -6,7 +6,9 @@ const Login = () => {
     const navigate = useNavigate()
     const handleSubmit = (e)=>{
         e.preventDefault()
+        localStorage.setItem("admin" , true)
         if(username==="username" && password==="password") navigate('/admin')
+
     }
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center">

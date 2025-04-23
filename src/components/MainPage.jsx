@@ -26,11 +26,13 @@ import TradingRequest from "../pages/TradingRequest";
 import TradingReport from "../pages/TradingReport";
 import RefundList from "../pages/RefundList";
 import CustomerList from "../pages/CustomerList";
+import { useNavigate } from "react-router-dom";
 
 // import SnavBar from './SnavBar';
 
 const MainPage = () => {
   const ref = useRef(null);
+  const navigate = useNavigate()
   const [noteView, setNoteView] = useState("Dashboard");
   const [slideOpen, setSlideOpen] = useState(false);
   const [customer , setCustomer] = useState(false)
@@ -357,6 +359,7 @@ const MainPage = () => {
   };
 
   useEffect(() => {
+    if(!JSON.parse(localStorage.getItem("userInfo"))?.user?._id) navigate('/signin')
     handleDashboard();
     setCustomer(JSON.parse(localStorage.getItem("userInfo"))?.user?.customer)
   }, []);

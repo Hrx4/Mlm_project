@@ -3,12 +3,12 @@ import { Dialog, Transition } from "@headlessui/react";
 import { RxCross2 } from "react-icons/rx";
 import { FaCircleUser } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [userInfo, setuserInfo] = useState({});
-
+const location = useLocation()
   const navigate = useNavigate()
 
 
@@ -41,7 +41,15 @@ export default function Navbar() {
                   </div>
                   {open ? (
                     <div className="w-48 bg-blue-200 absolute right-0 mr-8">
-                      <div className="flex items-center p-4 cursor-pointer hover:bg-sky-700" onClick={()=>navigate(-1)} >
+                      <div className="flex items-center p-4 cursor-pointer hover:bg-sky-700" onClick={()=>{
+                        if(location.pathname==="/admin") {
+                          localStorage.setItem("admin" , false)
+                          navigate('/login')}
+                          else {
+                            localStorage.setItem("userInfo" , false)
+                            
+                            navigate('/signin')}
+                      }} >
                         <MdLogout />
                         Log Out
                       </div>

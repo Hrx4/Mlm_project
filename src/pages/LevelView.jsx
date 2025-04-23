@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FiUser } from "react-icons/fi";
 import {
   Modal,
@@ -17,7 +17,7 @@ import backend from "../backend";
 const LevelView = ({ check }) => {
   const [open, setOpen] = useState(false);
   const [business, setBusiness] = useState([]);
-  const businessLevelComp = [];
+  const [businessLevelComp , setbusesLevelComp] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const [userCode, setUserCode] = useState("");
 
@@ -47,26 +47,6 @@ const LevelView = ({ check }) => {
       }
     });
 
-    businessLevelComp.push(
-      <tr key={i}>
-        <td className="border px-4 py-2">Level-{i} </td>
-        <td className="border px-4 py-2">{member}</td>
-        <td className="border px-4 py-2">{member}</td>
-        <td className="border px-4 py-2">0</td>
-        <td className="border px-4 py-2">{amount}</td>
-        <td className="border px-4 py-2">
-          <button
-            type="submit"
-            onClick={() => handleOpen(i)}
-            className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4"
-          >
-            View
-          </button>
-        </td>
-      </tr>
-    );
-  }
-
   const handleUser = async (e) => {
     e.preventDefault();
     try {
@@ -82,6 +62,48 @@ const LevelView = ({ check }) => {
       console.error("Error fetching data:", error);
     }
   };
+  const isFirstRender = useRef(true);
+
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return; // Skip the effect on first render
+    }
+    let curBusinessLevelComp = []
+
+    for (let i = 1; i <= 9; i++) {
+      let amount = 0;
+      let member = 0;
+      let business = currentUser?.business;
+      business?.map((item, index) => {
+        if (item?.businessLevel === i) {
+          amount += parseFloat(item?.businessMoney);
+          member++;
+        }
+      });
+  curBusinessLevelComp.push(
+        <tr key={i}>
+          <td className="border px-4 py-2">Level-{i} </td>
+          <td className="border px-4 py-2">{member}</td>
+          <td className="border px-4 py-2">{member}</td>
+          <td className="border px-4 py-2">0</td>
+          <td className="border px-4 py-2">{amount}</td>
+          <td className="border px-4 py-2">
+            <button
+              type="submit"
+              onClick={() => handleOpen(i)}
+              className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4"
+            >
+              View
+            </button>
+          </td>
+        </tr>
+      );
+    }
+    setbusesLevelComp(curBusinessLevelComp)
+  }, [currentUser])
+}
 
   const handleUserSide = async()=>{
     try {
@@ -195,7 +217,7 @@ const LevelView = ({ check }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {business.map((item, index) => (
+                  {business?.map((item, index) => (
                     <TableRow key={index}>
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{item.businessId}</TableCell>
