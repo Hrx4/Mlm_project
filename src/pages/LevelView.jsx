@@ -40,28 +40,14 @@ const LevelView = ({ check }) => {
     let amount = 0;
     let member = 0;
     let business = currentUser?.business;
-    business.map((item, index) => {
+    business?.map((item, index) => {
       if (item?.businessLevel === i) {
         amount += parseFloat(item?.businessMoney);
         member++;
       }
     });
 
-  const handleUser = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(`${backend}/user/detail`, {
-        userId:
-          check === "admin"
-            ? userCode
-            : JSON.parse(localStorage.getItem(userInfo).user.userId),
-      });
-      console.log(response.data);
-      setCurrentUser(response.data[0]);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  
   const isFirstRender = useRef(true);
 
 
@@ -122,6 +108,23 @@ const LevelView = ({ check }) => {
     handleUserSide() : null
   }, []);
 
+  const handleUser = async (e) => {
+    console.log("hd")
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${backend}/user/detail`, {
+        userId:
+          check === "admin"
+            ? userCode
+            : JSON.parse(localStorage.getItem(userInfo).user.userId),
+      });
+      console.log(response.data);
+      setCurrentUser(response.data[0]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   return (
     <>
       <div
@@ -140,8 +143,7 @@ const LevelView = ({ check }) => {
               className=" p-2 bg-green-400 rounded-xl ml-2"
               onClick={handleUser}
             >
-              {" "}
-              Submit{" "}
+              Submit
             </button>
           </div>
         ) : null}
