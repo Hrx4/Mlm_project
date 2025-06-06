@@ -34,56 +34,20 @@ const LevelView = ({ check }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  // for (let i = 1; i <= 9; i++) {
-  //   let amount = 0;
-  //   let member = 0;
-  //   let business = currentUser?.business;
-  //   business?.map((item, index) => {
-  //     if (item?.businessLevel === i) {
-  //       amount += parseFloat(item?.businessMoney);
-  //       member++;
-  //     }
-  //   });
+  let businessLength = currentUser?.childUsers?.length;
+  if (businessLength > 4) businessLength = 4;
+  for (let i = 1; i <= 9; i++) {
+    let amount = 0;
+    let member = 0;
+    let business = currentUser?.business;
+    business?.map((item, index) => {
+      if (item?.businessLevel === i) {
+        amount += parseFloat(item?.businessMoney);
+        member++;
+      }
+    });
 
-  //   businessLevelComp.push(
-  //     <tr key={i}>
-  //       <td className="border px-4 py-2">Level-{i} </td>
-  //       <td className="border px-4 py-2">{member}</td>
-  //       <td className="border px-4 py-2">{member}</td>
-  //       <td className="border px-4 py-2">0</td>
-  //       <td className="border px-4 py-2">{amount}</td>
-  //       <td className="border px-4 py-2">
-  //         <button
-  //           type="submit"
-  //           onClick={() => handleOpen(i)}
-  //           className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4"
-  //         >
-  //           View
-  //         </button>
-  //       </td>
-  //     </tr>
-  //   );
-  // }
-
-
-
-
-
-  const handleUser = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(`${backend}/user/detail`, {
-        userId:
-          check === "admin"
-            ? userCode
-            : JSON.parse(localStorage.getItem(userInfo).user.userId),
-      });
-      console.log(response.data);
-      setCurrentUser(response.data[0]);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  
   const isFirstRender = useRef(true);
 
 
@@ -125,7 +89,7 @@ const LevelView = ({ check }) => {
     }
     setbusesLevelComp(curBusinessLevelComp)
   }, [currentUser])
-  
+}
 
   const handleUserSide = async()=>{
     try {
@@ -143,6 +107,23 @@ const LevelView = ({ check }) => {
     check !== "admin" ? 
     handleUserSide() : null
   }, []);
+
+  const handleUser = async (e) => {
+    console.log("hd")
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${backend}/user/detail`, {
+        userId:
+          check === "admin"
+            ? userCode
+            : JSON.parse(localStorage.getItem(userInfo).user.userId),
+      });
+      console.log(response.data);
+      setCurrentUser(response.data[0]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   return (
     <>
@@ -162,8 +143,7 @@ const LevelView = ({ check }) => {
               className=" p-2 bg-green-400 rounded-xl ml-2"
               onClick={handleUser}
             >
-              {" "}
-              Submit{" "}
+              Submit
             </button>
           </div>
         ) : null}

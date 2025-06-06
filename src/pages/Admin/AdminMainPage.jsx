@@ -13,9 +13,12 @@ import TradingReport from "../TradingReport";
 import Refund from "../Refund";
 import RefundList from "../RefundList";
 import CustomerList from "../CustomerList";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AdminMainPage = () => {
   const ref = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate()
   const [noteView, setNoteView] = useState("MyProfile");
   const [slideOpen, setSlideOpen] = useState(false);
   const [Dashboard, setDashboard] = useState([
@@ -344,6 +347,7 @@ const AdminMainPage = () => {
   };
 
   useEffect(() => {
+    if(!JSON.parse(localStorage.getItem("admin"))) navigate("/login")
     handleMyProfile();
   }, []);
 
