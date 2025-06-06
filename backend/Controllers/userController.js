@@ -45,7 +45,7 @@ const createUser = asyncHandler(async (req, res) => {
     customer,
   });
   try {
-    const createList = await idList.create({
+     await idList.create({
       userName,
       userId: userId,
       introducerCode: introducerCode,
