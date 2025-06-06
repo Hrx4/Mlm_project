@@ -27,20 +27,7 @@ const createUser = asyncHandler(async (req, res) => {
   if (introducerCode !== "" && intCheck.userStatus !== "Active") {
     return res.status(400).json({message : "Introducer not active"})
   }
-  try {
-    const createList = await idList.create({
-      userName,
-      userId: userId,
-      introducerCode: introducerCode,
-      userEmail: userEmail,
-      customer,
-    });
-  } catch (error) {
-    console.log("====================================");
-    console.log(error);
-    console.log("====================================");
-    throw new Error(`Error : ${error.message}`);
-  }
+  
 
   const user = await UserModel.create({
     userId: userId,
@@ -57,6 +44,20 @@ const createUser = asyncHandler(async (req, res) => {
     bankPan,
     customer,
   });
+  try {
+    const createList = await idList.create({
+      userName,
+      userId: userId,
+      introducerCode: introducerCode,
+      userEmail: userEmail,
+      customer,
+    });
+  } catch (error) {
+    console.log("====================================");
+    console.log(error);
+    console.log("====================================");
+    throw new Error(`Error : ${error.message}`);
+  }
   return res.status(200).json(user);
 });
 

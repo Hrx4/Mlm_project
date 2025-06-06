@@ -148,6 +148,7 @@ const UserSchema = mongoose.Schema(
     bankPan: {
       type: String,
       default: "",
+      unique : true
     },
     kycPan: {
       type: String,

@@ -38,13 +38,6 @@ const acceptUser = asyncHandler(async (req, res) => {
         parentChild = [introducerCode];
       }
 
-      parentUser.levelIncome += membershipFee * data[0];
-      parentUser.business.push({
-        businessId: userId,
-        businessName: businessName,
-        businessMoney: membershipFee * data[0],
-        businessLevel: 1,
-      });
       parentChild = parentChild.slice(-9)
 
       const parentSize = parentChild.length;

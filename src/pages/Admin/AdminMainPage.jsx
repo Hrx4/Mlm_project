@@ -692,7 +692,7 @@ const AdminMainPage = () => {
             </ul>
           </div>
 
-           <div
+           {/* <div
             style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
             className="note__btn"
           >
@@ -728,9 +728,9 @@ const AdminMainPage = () => {
                 </li>
               ))}
             </ul>
-          </div> 
+          </div>  */}
 
-          <div
+          {/* <div
             style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
             className="note__btn"
           >
@@ -795,7 +795,7 @@ const AdminMainPage = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
         <div
           style={{
