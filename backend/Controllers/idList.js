@@ -37,6 +37,15 @@ const acceptUser = asyncHandler(async (req, res) => {
       } else {
         parentChild = [introducerCode];
       }
+      // parentUser.levelIncome += membershipFee * data[0];
+      parentUser.business.push({
+        businessId: userId,
+        businessName: businessName,
+        businessMoney: 0,
+        businessLevel: 1,
+      });
+
+      
 
       parentChild = parentChild.slice(-9)
 
@@ -46,11 +55,11 @@ const acceptUser = asyncHandler(async (req, res) => {
         let currentParent = await UserModel.findOne({
           userId: parentChild[parentSize - i - 1],
         });
-        currentParent.levelIncome += membershipFee * data[i];
+        // currentParent.levelIncome += membershipFee * data[i];
         currentParent.business.push({
           businessId: userId,
           businessName: businessName,
-          businessMoney: membershipFee * data[i],
+          businessMoney: 0,
           businessLevel: i + 1,
         });
         const parentSave = await currentParent.save();
