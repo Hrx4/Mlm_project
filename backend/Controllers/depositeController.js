@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const UserModel = require("../Models/userModel");
 const depositeModel = require("../Models/depositeModel");
-const data = [  0.015, 0.01, 0.005, 0.003, 0.002,0.002, 0.001, 0.001, 0.001];
+const data = [0.015, 0.01, 0.005, 0.003, 0.002, 0.002, 0.001, 0.001, 0.001];
 
 const createDeposite = asyncHandler(async (req, res) => {
   const {
@@ -11,12 +11,12 @@ const createDeposite = asyncHandler(async (req, res) => {
     userEmail,
     introducerCode,
     userId,
-    customer
+    customer,
   } = req.body;
 
-  
   const currentUser = await UserModel.findOne({ userEmail: userEmail });
-  if (currentUser.userStatus !== "Active") return res.status(400).json({message : "Take membership first"})
+  if (currentUser.userStatus !== "Active")
+    return res.status(400).json({ message: "Take membership first" });
 
   const deposite = await depositeModel.create({
     depositeAmount,
@@ -26,45 +26,51 @@ const createDeposite = asyncHandler(async (req, res) => {
     userId,
     depositeDate: new Date().toLocaleDateString(),
     introducerCode,
-    customer
+    customer,
   });
-//   let user = await UserModel.findOne({ userId: userId });
-//     (new Date().getDate() >= 15 && new Date().getDate() <= 31)
-//       ? (user.selfIncomeHalf += depositeAmount)
-//       : (user.selfIncome += depositeAmount);
-// await user.save()
-
+  //   let user = await UserModel.findOne({ userId: userId });
+  //     (new Date().getDate() >= 15 && new Date().getDate() <= 31)
+  //       ? (user.selfIncomeHalf += depositeAmount)
+  //       : (user.selfIncome += depositeAmount);
+  // await user.save()
 
   res.status(200).json({ message: "User Accepted" });
 });
 
 const acceptDeposite = asyncHandler(async (req, res) => {
-  const { depositeAmount, userEmail, introducerCode, userId, acceptId , customer} =
-    req.body;
+  const {
+    depositeAmount,
+    userEmail,
+    introducerCode,
+    userId,
+    acceptId,
+    customer,
+  } = req.body;
   const currentUser = await UserModel.findOne({ userEmail: userEmail });
-  if (currentUser.userStatus !== "Active") throw new Error("Take membership first");
+  if (currentUser.userStatus !== "Active")
+    throw new Error("Take membership first");
   let parentChild = currentUser.levelParent;
   const businessName = currentUser.userName;
 
-  (new Date().getDate() >= 15 && new Date().getDate() <= 31)
-  ? (currentUser.selfIncomeHalf += depositeAmount)
-  : (currentUser.selfIncome += depositeAmount);
+  new Date().getDate() >= 15 && new Date().getDate() <= 31
+    ? (currentUser.selfIncomeHalf += depositeAmount)
+    : (currentUser.selfIncome += depositeAmount);
   await currentUser.save();
 
   try {
-    if(customer && introducerCode !== "") {
-
+    if (customer && introducerCode !== "") {
       const parentUser = await UserModel.findOne({ userId: introducerCode });
-      parentUser.customerIncome += parseInt(depositeAmount * 0.015)
-      const ind = parentUser.customerList.findIndex((item)=>item.userId===userId)
+      parentUser.customerIncome += parseInt(depositeAmount * 0.015);
+      const ind = parentUser.customerList.findIndex(
+        (item) => item.userId === userId
+      );
       parentUser.customerList[ind] = {
-        userId : parentUser.customerList[ind].userId,
-        amount : parentUser.customerList[ind].amount +  (depositeAmount * 0.015)
-      }
-        
-      await parentUser.save()
+        userId: parentUser.customerList[ind].userId,
+        amount: parentUser.customerList[ind].amount + depositeAmount * 0.015,
+      };
 
-    }else if (introducerCode !== "") {
+      await parentUser.save();
+    } else if (introducerCode !== "") {
       const parentUser = await UserModel.findOne({ userId: introducerCode });
       if (!parentUser)
         return res.status(404).json({ message: "Invalid Introductur Code" });
@@ -87,13 +93,14 @@ const acceptDeposite = asyncHandler(async (req, res) => {
         };
       }
 
-      parentChild = parentChild.slice(-9)
+      parentChild = parentChild.slice(-9);
+      parentChild.reverse()
 
       const parentSize = parentChild.length;
 
-      for (let i = 1; i < parentSize; i++) {
+      for (let i = 0; i < parentSize; i++) {
         let currentParent = await UserModel.findOne({
-          userId: parentChild[parentSize - i - 1],
+          userId: parentChild[i],
         });
         currentParent.levelIncome += depositeAmount * data[i];
         let curInd = 0;
@@ -108,7 +115,7 @@ const acceptDeposite = asyncHandler(async (req, res) => {
             businessName: businessName,
             businessMoney:
               currentParent.business[curInd].businessMoney +
-              depositeAmount * data[0],
+              depositeAmount * data[i],
             businessLevel: i + 1,
           };
         }
