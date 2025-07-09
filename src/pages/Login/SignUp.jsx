@@ -260,7 +260,7 @@ useEffect(() => {
           />
         </div>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
               <label
                 htmlFor="bankPan"
                 className="block text-sm font-medium text-gray-600"
@@ -277,7 +277,7 @@ useEffect(() => {
                 <option value="false">false</option>
                 <option value="true">true</option>
               </select>
-            </div>
+            </div> */}
 
         {/* Add similar input fields for other form fields with respective useState and onChange handlers */}
 

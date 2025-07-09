@@ -77,6 +77,7 @@ const DepositeList = ({ role }) => {
             <th>Sl No.</th>
             <th>Id</th>
             <th>Amount</th>
+            <th>Deposite Id</th>
             <th>Deposite Mode</th>
             <th>Email</th>
             <th>Date</th>
@@ -88,6 +89,7 @@ const DepositeList = ({ role }) => {
                 <td>{index + 1}</td>
                 <td>{item?.userId}</td>
                 <td>{item?.depositeAmount}</td>
+                <td>{item?.depositeId}</td>
                 <td>{item?.depositeMode}</td>
                 <td>{item?.userEmail}</td>
                 <td>{item?.depositeDate}</td>

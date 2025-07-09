@@ -13,6 +13,7 @@ const INRDeposit = () =>{
     const [depositeFee, setDepositeFee] = useState(0);
     const [depositePhoto, setDepositePhoto] = useState("");
     const [depositeMode, setDepositeMode] = useState("");
+    const [depositeId, setDepositeId] = useState("");
 
     const [loading, setLoading] = useState(false);
     const ref = useRef()
@@ -51,6 +52,7 @@ const INRDeposit = () =>{
           depositeAmount : parseInt(depositeFee),
     depositePhoto : depositePhoto,
     depositeMode : depositeMode,
+    depositeId : depositeId,  
     userEmail :JSON.parse(localStorage.getItem("userInfo")).user.userEmail,
     introducerCode : JSON.parse(localStorage.getItem("userInfo")).user.introducerCode,
     userId :JSON.parse(localStorage.getItem("userInfo")).user.userId,
@@ -58,6 +60,7 @@ const INRDeposit = () =>{
         });
         setDepositeFee(0)
         setDepositeMode("")
+        setDepositeId("")
   ref.current.value=""
   setDepositePhoto("")
         console.log('====================================');
@@ -149,6 +152,15 @@ const INRDeposit = () =>{
               onChange={(e)=>setDepositeMode(e.target.value)}
                className=" rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required style={{width:"75%", height:"45px"}}/>
             </div>
+
+          <div className="mb-4">
+              <label htmlFor="mode" className="block font-semibold">Deposite Id *</label>
+              <input type="text"id="mode"
+              value={depositeId}
+              onChange={(e)=>setDepositeId(e.target.value)}
+               className=" rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500" required style={{width:"75%", height:"45px"}}/>
+            </div>
+
             <div className="mb-4">
               <label htmlFor="photo" className="block font-semibold">Payment Photo *</label>
               <input type="file" accept="image/*"
@@ -181,6 +193,7 @@ const INRDeposit = () =>{
                             <tr>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>SL.</th>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Amount</th>
+                                <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Deposite Id</th>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Date</th>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Payment Details</th>
                                 <th className="px-4 py-2" style={{ color: "white", backgroundColor: "black" }}>Status</th>
@@ -192,6 +205,7 @@ const INRDeposit = () =>{
                             <tr key={item._id}>
                                 <td className="border px-4 py-2">{index+1}</td>
                                 <td className="border px-4 py-2"> {item?.depositeAmount} </td>
+                                <td className="border px-4 py-2"> {item?.depositeId} </td>
                                 <td className="border px-4 py-2"> {item?.depositeDate} </td>
                                 <td className="border px-4 py-2"><Button onClick={handleOpen}>View Details</Button></td>
                                 <td className="border px-4 py-2"> {item?.depositeStatus} </td>

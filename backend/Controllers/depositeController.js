@@ -6,6 +6,7 @@ const data = [0.015, 0.01, 0.005, 0.003, 0.002, 0.002, 0.001, 0.001, 0.001];
 const createDeposite = asyncHandler(async (req, res) => {
   const {
     depositeAmount,
+    depositeId,
     depositePhoto,
     depositeMode,
     userEmail,
@@ -22,6 +23,7 @@ const createDeposite = asyncHandler(async (req, res) => {
     depositeAmount,
     depositePhoto,
     depositeMode,
+    depositeId,
     userEmail,
     userId,
     depositeDate: new Date().toLocaleDateString(),

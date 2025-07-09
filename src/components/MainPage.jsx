@@ -773,7 +773,7 @@ const MainPage = () => {
           </div> :null
           } */}
 
-          <div
+          {/* <div
             style={{ paddingTop: 20, cursor: "pointer", paddingBottom: 15 }}
             className="note__btn"
           >
@@ -818,7 +818,7 @@ const MainPage = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
         <div
           style={{

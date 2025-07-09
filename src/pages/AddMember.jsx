@@ -185,7 +185,7 @@ const AddMember = () => {
                 Password*
               </label>
               <input
-                type="text"
+                type="password"
                 id="password"
                 className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500"
                 required
@@ -270,7 +270,7 @@ const AddMember = () => {
                 required
               />
             </div>
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label
                 htmlFor="bankPan"
                 className="block text-sm font-medium text-gray-600"
@@ -287,7 +287,7 @@ const AddMember = () => {
                 <option value="false">false</option>
                 <option value="true">true</option>
               </select>
-            </div>
+            </div> */}
           </div>
           <button
             type="submit"

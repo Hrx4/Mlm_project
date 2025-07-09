@@ -13,6 +13,9 @@ const depositeModel = mongoose.Schema(
     depositeMode : {
         type : String
       },
+      depositeId : {
+        type : String
+      },
       depositeStatus:{
         type: String,
         default : "None"

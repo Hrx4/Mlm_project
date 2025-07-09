@@ -41,23 +41,23 @@ const MainDashboard = () => {
                 />
               </>
             ) : null}
-            <Card
+            {/* <Card
               icon={<MdAttachMoney />}
               title="Self Income"
               subtitle={`₹${userInfo?.selfIncomePer}`}
-            />
-            <Card
+            /> */}
+            {/* <Card
               icon={<MdAttachMoney />}
               title="Trading Income"
               subtitle={`₹${userInfo?.tradingPer}`}
-            />
-            {!userInfo?.customer ? (
+            /> */}
+            {/* {!userInfo?.customer ? (
               <Card
                 icon={<MdAttachMoney />}
                 title="Customer Income"
                 subtitle={`₹${userInfo?.customerIncome}`}
               />
-            ) : null}
+            ) : null} */}
             <Card
               icon={<MdAttachMoney />}
               title="Total Income"
