@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { MdPerson, MdPeople, MdAttachMoney } from "react-icons/md";
+import { FaCheckCircle } from "react-icons/fa";
+import { FaCode } from "react-icons/fa6";
 import { RiTeamLine } from "react-icons/ri";
 
 const MainDashboard = () => {
@@ -46,28 +48,28 @@ const MainDashboard = () => {
               title="Self Income"
               subtitle={`₹${userInfo?.selfIncomePer}`}
             /> */}
-            {/* <Card
-              icon={<MdAttachMoney />}
-              title="Trading Income"
-              subtitle={`₹${userInfo?.tradingPer}`}
-            /> */}
-            {/* {!userInfo?.customer ? (
-              <Card
-                icon={<MdAttachMoney />}
-                title="Customer Income"
-                subtitle={`₹${userInfo?.customerIncome}`}
-              />
-            ) : null} */}
+            
             <Card
               icon={<MdAttachMoney />}
               title="Total Income"
               subtitle={`₹${userInfo?.customerIncome + userInfo?.selfIncomePer + userInfo?.tradingPer + userInfo?.levelIncome }`}
             />
             <Card
-              icon={<MdAttachMoney />}
+              icon={<FaCheckCircle  />}
               title="Status"
               subtitle={userInfo?.userStatus}
             />
+            <Card
+              icon={<FaCode />}
+              title="Introducer Code"
+              subtitle={`${userInfo?.introducerCode ? userInfo?.introducerCode : "Null"}`}
+            />
+           
+              <Card
+                icon={<MdPerson />}
+                title="Introducer Name"
+                subtitle={`${userInfo?.introducerName ? userInfo?.introducerName : "Null"}`}
+              />
           </div>
         </IconContext.Provider>
       </div>
