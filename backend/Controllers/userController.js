@@ -276,6 +276,7 @@ const deleteUser = asyncHandler(async (req, res) => {
   const { userId } = req.body;
  
   const userList = await UserModel.findOneAndDelete({ userId });
+  await idList.findOneAndDelete({ userId });
   res.status(200).json(userList);
 });
 
