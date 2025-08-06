@@ -272,6 +272,13 @@ const getCustomerList = asyncHandler(async (req, res) => {
   res.status(200).json(userList);
 });
 
+const deleteUser = asyncHandler(async (req, res) => {
+  const { userId } = req.body;
+ 
+  const userList = await UserModel.findOneAndDelete({ userId });
+  res.status(200).json(userList);
+});
+
 module.exports = {
   createUser,
   updateBankInfo,
@@ -285,4 +292,5 @@ module.exports = {
   getAllUserNo,
   selfIncomeIncraement,
   getCustomerList,
+  deleteUser
 };

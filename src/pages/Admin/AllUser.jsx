@@ -9,6 +9,7 @@ const AllUser = () => {
   const [userMobile, setUserMobile] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [userdelete, setUserdelete] = useState(false)
 
   const [userFather, setUserFather] = useState("");
   const [userDob, setUserDob] = useState("");
@@ -59,6 +60,29 @@ const AllUser = () => {
       setModalOpen(true)
 
   }
+
+   const handleDelete = async (userId) => {
+    console.log(userId)
+    try {
+      const response = await axios.delete(
+        `${backend}/user/delete/`,
+        {
+          data: {
+            userId: userId
+          }
+        }
+      );
+      console.log(response.data);
+      if (response.status === 200) {
+        // window.location.reload();
+        setUserdelete(!userdelete)
+
+      }
+    } catch (error) {
+      alert("Error Occured")
+      console.error("Error fetching data:", error);
+    }
+  };
 
 
   const handleSubmit = async (e) => {
@@ -119,11 +143,12 @@ const AllUser = () => {
   }
 
 
+
   useEffect(() => {
     
     fetching()
     
-  }, []);
+  }, [userdelete]);
 
   return (
     <>
@@ -472,8 +497,8 @@ const AllUser = () => {
                                 <td className="border px-4 py-2">{item.userEmail}</td>
                                 
                                  <td className="border px-4 py-2 "> 
-                                 <button className=" p-2 bg-blue-400 rounded-xl" onClick={()=>handleModalOpen(item)}>Edit / View</button>
-                                 <button className=" p-2 bg-red-400 rounded-xl ml-2">Delete</button>
+                                 <button className=" p-2 bg-blue-400 rounded-xl" noClick={()=>handleModalOpen(item)}>Edit / View</button>
+                                 <button className=" p-2 bg-red-400 rounded-xl ml-2" onClick={()=>handleDelete(item?.userId)}>Delete</button>
                                   </td>
 
                             </tr>

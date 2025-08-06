@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser, updateBankInfo, updateKyc, updateProfile, getUser, getAllUser, updatePassword, updateUser, adminUserList, getAllUserNo, getCustomerList } = require('../Controllers/userController');
+const { createUser, updateBankInfo, updateKyc, updateProfile, getUser, getAllUser, updatePassword, updateUser, adminUserList, getAllUserNo, getCustomerList, deleteUser } = require('../Controllers/userController');
 
 const router= express.Router()
 
@@ -13,6 +13,7 @@ router.route('/bank/:id').put(updateBankInfo);
 router.route('/kyc/:id').put(updateKyc);
 router.route('/profile/:id').put(updateProfile);
 router.route('/customerlist').post(getCustomerList)
+router.route('/delete').delete(deleteUser);
 
 
 module.exports = router
